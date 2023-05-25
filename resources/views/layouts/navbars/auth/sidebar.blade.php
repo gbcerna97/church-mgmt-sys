@@ -18,20 +18,16 @@
         <h6 class="ps-4 ms-2 text-uppercase text-xs font-weight-bolder opacity-6">Members</h6>
       </li>
       <li class="nav-item">
-        <a class="nav-link" href="{{ url('home') }}">
+        <a class="nav-link" href="{{ url('members') }}">
           <span class="nav-link-text ms-1">All Members</span>
         </a>
       </li>
-      <li class="nav-item">
-        <a class="nav-link" href="{{ url('home') }}">
-          <span class="nav-link-text ms-1">Registration</span>
-        </a>
-      </li>
+  
       <li class="nav-item mt-3">
         <h6 class="ps-4 ms-2 text-uppercase text-xs font-weight-bolder opacity-6">Inventory</h6>
       </li>
       <li class="nav-item">
-        <a class="nav-link {{ (Request::is('user-profile') ? 'active' : '') }} " href="{{ url('user-profile') }}">
+        <a class="nav-link {{ (Request::is('user-profile') ? 'active' : '') }} " href="{{ url('inventory') }}">
             <span class="nav-link-text ms-1">All Items</span>
         </a>
       </li>
@@ -44,17 +40,17 @@
         <h6 class="ps-4 ms-2 text-uppercase text-xs font-weight-bolder opacity-6">Events</h6>
       </li>
       <li class="nav-item">
-        <a class="nav-link {{ (Request::is('user-profile') ? 'active' : '') }} " href="{{ url('user-profile') }}">
+        <a class="nav-link {{ (Request::is('user-profile') ? 'active' : '') }} " href="{{ url('events') }}">
             <span class="nav-link-text ms-1">All Events</span>
         </a>
       </li>
       <li class="nav-item">
-        <a class="nav-link {{ (Request::is('user-profile') ? 'active' : '') }} " href="{{ url('user-profile') }}">
+        <a class="nav-link {{ (Request::is('user-profile') ? 'active' : '') }} " href="{{ url('attendance') }}">
             <span class="nav-link-text ms-1">Attendance</span>
         </a>
       </li>
       <li class="nav-item">
-        <a class="nav-link {{ (Request::is('user-profile') ? 'active' : '') }} " href="{{ url('user-profile') }}">
+        <a class="nav-link {{ (Request::is('user-profile') ? 'active' : '') }} " href="{{ url('attendance/view') }}">
             <span class="nav-link-text ms-1">Attendance Record</span>
         </a>
       </li>
