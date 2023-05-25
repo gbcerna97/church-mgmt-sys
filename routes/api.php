@@ -26,29 +26,3 @@ use App\Http\Controllers\SessionsController;
 Route::middleware('auth:sanctum')->get('/user', function (Request $request) {
     return $request->user();
 });
-
-Route::middleware('auth:sanctum')->group(function () {
-    Route::controller(CarouselItemController::class)->group(function () {
-        Route::get('/giver', 'index');
-        Route::post('/giver', 'store');
-        Route::get('/giver/{id}', 'show');
-        Route::post('/giver/{id}', 'update');
-        Route::delete('/giver/{id}', 'destroy');
-    });
-});
-
-Route::group(['middleware' => 'guest'], function () {
-    Route::get('/register', [RegisterController::class, 'create']);
-    Route::post('/register', [RegisterController::class, 'store'])->name('user.register');
-    Route::get('/login', [SessionsController::class, 'create'])->name('user.login');
-    Route::post('/session', [SessionsController::class, 'store']);
-	Route::get('/login/forgot-password', [ResetController::class, 'create']);
-	Route::post('/forgot-password', [ResetController::class, 'sendEmail']);
-	Route::get('/reset-password/{token}', [ResetController::class, 'resetPass'])->name('password.reset');
-	Route::post('/reset-password', [ChangePasswordController::class, 'changePassword'])->name('password.update');
-
-});
-
-Route::get('/login', function () {
-    return view('session/login-session');
-})->name('login');
