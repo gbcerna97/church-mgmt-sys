@@ -4,6 +4,11 @@
 <div>
     <div class="container-fluid py-4">
         <div class="card">
+            <div class="card-body pt-4 p-3">
+              <div>
+              <div>
+    <div class="container-fluid py-4">
+        <div class="card">
             <div class="m-4">
                 <a class="btn btn-primary" href="{{ route('inventory.index') }}"> Back</a>
             </div>
@@ -38,7 +43,7 @@
         </div>
         <div class="col-xs-12 col-sm-12 col-md-12">
             <div class="form-group">
-                <strong>Pruchase Date:</strong>
+                <strong>Purchase Date:</strong>
                 {{ $inventory->date_purchased }}
             </div>
         </div>
@@ -61,6 +66,11 @@
             </div>
         </div>
     </div>
+              </div>        
+            </div>
+        </div>
+    </div>
+</div>
               </div>        
             </div>
         </div>
