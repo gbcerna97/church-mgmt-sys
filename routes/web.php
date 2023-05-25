@@ -1,6 +1,10 @@
 <?php
 
+use App\Http\Controllers\MemberController;
 use App\Http\Controllers\ChangePasswordController;
+use App\Http\Controllers\InventoryController;
+use App\Http\Controllers\EventController;
+use App\Http\Controllers\AttendanceController;
 use App\Http\Controllers\HomeController;
 use App\Http\Controllers\InfoUserController;
 use App\Http\Controllers\RegisterController;
@@ -53,3 +57,22 @@ Route::group(['middleware' => 'guest'], function () {
 Route::get('/login', function () {
     return view('session/login-session');
 })->name('login');
+
+// For the members routes 
+Route::resource('members', MemberController::class);
+
+
+// for the purchases
+Route::resource('inventory', InventoryController::class);
+
+// for events
+Route::resource('events', EventController::class);
+
+// for attendance
+Route::get('/attendance', [AttendanceController::class, 'index'])->name('attendance.index');
+Route::post('/attendance', [AttendanceController::class, 'store'])->name('attendance.store');
+Route::get('/attendance/view', [AttendanceController::class, 'viewAttendance'])->name('attendance.view');
+
+
+
+
