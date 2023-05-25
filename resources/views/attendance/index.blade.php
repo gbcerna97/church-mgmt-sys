@@ -25,7 +25,7 @@
 
     @if ($message = Session::get('error'))
         <div class="alert alert-danger">
-            <p class='text-light font-weight-bold'>{{ $message }}</p>
+            <p class='text-light font-bold'>{{ $message }}</p>
         </div>
     @endif
 
@@ -40,7 +40,7 @@
                         @csrf
                         <div class="form-group">
                             <label for="event_name">Select Event:</label>
-                            <select name="event_id" id="event_id" class="form-control">
+                            <select name="event_id" id="event_id" class="form-control mt-8">
                                 @foreach($events as $event)
                                     @if($event->done == 0)
                                         <option value="{{ $event->id }}">{{ $event->title }}</option>

@@ -12,7 +12,7 @@
               <div class="row">
       
         <div class="pull-right">
-                <button class='btn btn-info'><a href="{{ route('attendance.index') }}">Back</a></button>
+                <button class='btn bg-gradient-info text-white'><a href="{{ route('attendance.index') }}">Back</a></button>
             </div>
     </div>
 

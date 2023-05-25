@@ -1,6 +1,13 @@
-@extends('eventviews.layout')
+@extends('layouts.user_type.auth')
+
 @section('content')
-    <div class="row">
+<div>
+    <div class="container-fluid py-4">
+        <div class="card">
+           
+            <div class="card-body pt-4 p-3">
+              <div>
+              <div class="row">
         <div class="col-lg-12 margin-tb">
             <div class="pull-left">
                 <h2>Show Event</h2>
@@ -38,4 +45,12 @@
         </div>
        
     </div>
+              </div>        
+            </div>
+        </div>
+    </div>
+</div>
 @endsection
+@push('dashboard')
+
+@endpush

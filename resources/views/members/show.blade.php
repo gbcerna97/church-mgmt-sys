@@ -1,11 +1,17 @@
 @extends('layouts.user_type.auth')
 
 @section('content')
-    <div class="row">
-        <div class="col-lg-12 margin-tb">
-            <div class="pull-left">
-                <h2> Show Member</h2>
+<div>
+    <div class="container-fluid py-4">
+        <div class="card">
+            <div class="card-header pb-0 px-3">
+                <h2 class="mb-0">{{ __('Show Member') }}</h2>
             </div>
+            <div class="card-body pt-4 p-3">
+              <div>
+              <div class="row">
+        <div class="col-lg-12 margin-tb">
+          
             <div class="pull-right">
                 <a class="btn btn-primary" href="{{ route('members.index') }}"> Back</a>
             </div>
@@ -68,4 +74,12 @@
             </div>
         </div>
     </div>
+              </div>        
+            </div>
+        </div>
+    </div>
+</div>
 @endsection
+@push('dashboard')
+
+@endpush

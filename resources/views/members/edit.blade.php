@@ -1,4 +1,4 @@
-@extends('layouts.user_type.auth')
+@extends('inventory.layout')
    
 @section('content')
     <div class="row">
