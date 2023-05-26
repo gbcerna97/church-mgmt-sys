@@ -57,10 +57,12 @@ class AttendanceController extends Controller
 
     public function viewAttendance()
     {
-        $attendance = Attendance::join('events', 'events.id', '=', 'attendance.event_id')->join('members', 'members.id', '=', 'attendance.member_id');
+        $attendances = Attendance::join('events', 'events.id', '=', 'attendance.event_id')
+            ->join('members', 'members.id', '=', 'attendance.member_id')
+            ->groupBy('events.title', 'attendance.present')
+            ->get(['events.title', Attendance::raw('GROUP_CONCAT(CONCAT(members.member_name, " - ", IF(attendance.present = 0, "absent", "present")) SEPARATOR "\n") as member_info')]);
 
-        return view('attendance.view', compact('attendances', 'eventIds'));
+        return view('attendance.view', compact('attendances'));
     }
-
 
 }

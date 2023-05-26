@@ -9,9 +9,6 @@
         <div class="card-body pt-4 p-3">
             <div class="row">
                 <div class="col-lg-12 margin-tb">
-                    <div class="pull-right">
-                        <a class="btn btn-success" href="{{ route('attendance.view') }}">View Attendance</a>
-                    </div>
                 </div>
             </div>
 

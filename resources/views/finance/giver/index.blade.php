@@ -48,8 +48,7 @@
                         </tr>
                         @endforeach
                     </table>
-                
-                    {!! $givers->links() !!}
+                    
                 </div>        
             </div>
         </div>

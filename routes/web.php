@@ -10,7 +10,7 @@ use App\Http\Controllers\Finance\GiverController;
 use App\Http\Controllers\Event\AttendanceController;
 use App\Http\Controllers\Event\EventController;
 use App\Http\Controllers\Membership\MemberController;
-use App\Http\Controllers\InventoryController;
+use App\Http\Controllers\Inventory\InventoryController;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Password;
 use Illuminate\Support\Facades\Route;

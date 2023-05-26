@@ -11,9 +11,6 @@
               <div>
               <div class="row">
       
-        <div class="pull-right">
-                <button class='btn bg-gradient-info text-white'><a href="{{ route('attendance.index') }}">Back</a></button>
-            </div>
     </div>
 
     <div class="row">
@@ -26,12 +23,15 @@
                     </tr>
                 </thead>
                 <tbody>
-                @foreach($events_id as $attendance)
+                @foreach($attendances as $attendance)
                     <tr>
-                        <td>{{ $attendance->event_id }}</td>
-                        
+                        <td>{{ $attendance->title }}</td>
+                        <td>
+                            {!! nl2br(e($attendance->member_info)) !!}
+                        </td>
                     </tr>
                 @endforeach
+
                 </tbody>
             </table>
         </div>

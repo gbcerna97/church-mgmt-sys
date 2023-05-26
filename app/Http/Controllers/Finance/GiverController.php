@@ -16,14 +16,15 @@ class GiverController extends Controller
     public function index(Request $request)
     {
         $givers = Giver::latest()
-            ->select('givers.*')
-            ->selectRaw('SUM(tithe) + SUM(offering) + SUM(mission) + SUM(sanctuary) + SUM(love_gift) + SUM(dance_ministry) AS sum')
-            ->groupBy('givers.id')
-            ->paginate(10);
+        ->select('givers.id', 'givers.giver_name') // Include the giver_name column
+        ->selectRaw('SUM(tithe) + SUM(offering) + SUM(mission) + SUM(sanctuary) + SUM(love_gift) + SUM(dance_ministry) AS sum')
+        ->groupBy('givers.id', 'givers.giver_name') // Include giver_name in the GROUP BY clause
+        ->paginate(10);
+
 
         return view('finance.giver.index', compact('givers'))->with('i', (request()->input('page', 1) - 1) * 5);
-
     }
+
 
 
     /**
@@ -42,12 +43,6 @@ class GiverController extends Controller
         $request->validate([
             'giver_name' => 'required',
             'date' => 'required',
-            'tithe' => 'required',
-            'offering' => 'required',
-            'mission' => 'required',
-            'sanctuary' => 'required',
-            'love_gift' => 'required',
-            'dance_ministry' => 'required',
         ]);
 
         Giver::create($request->all());
