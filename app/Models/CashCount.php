@@ -3,9 +3,11 @@
 namespace App;
 
 use Illuminate\Database\Eloquent\Model;
+use Illuminate\Database\Eloquent\Relations\BelongsTo;
 
 class CashCount extends Model
 {
+
     protected $fillable = [
         'date',
         'cc_1000',
@@ -23,4 +25,9 @@ class CashCount extends Model
         'cc_0_01',
         'total',
     ];
+
+    public function church(): BelongsTo
+    {
+        return $this->belongsTo(Church::class);
+    }
 }

@@ -3,6 +3,7 @@
 namespace App;
 
 use Illuminate\Database\Eloquent\Model;
+use Illuminate\Database\Eloquent\Relations\BelongsTo;
 
 class ScheduleTotal extends Model
 {
@@ -16,4 +17,9 @@ class ScheduleTotal extends Model
         'dance_ministry',
         'grand_total',
     ];
+
+    public function area(): BelongsTo
+    {
+        return $this->belongsTo(Area::class);
+    }
 }

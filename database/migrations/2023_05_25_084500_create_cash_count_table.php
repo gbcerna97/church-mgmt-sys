@@ -11,9 +11,10 @@ return new class extends Migration
      */
     public function up(): void
     {
-        Schema::create('cash_count', function (Blueprint $table) {
+        Schema::create('cash_counts', function (Blueprint $table) {
             $table->id();
             $table->date('date');
+            $table->unsignedBigInteger('church_id');
             $table->integer('cc_1000')->nullable();
             $table->integer('cc_500')->nullable();
             $table->integer('cc_200')->nullable();
@@ -29,6 +30,8 @@ return new class extends Migration
             $table->float('cc_0_01')->nullable();
             $table->float('total')->nullable();
             $table->timestamps();
+
+            $table->foreign('church_id')->references('id')->on('church');
         });
     }
 
@@ -37,6 +40,6 @@ return new class extends Migration
      */
     public function down(): void
     {
-        Schema::dropIfExists('cash_count');
+        Schema::dropIfExists('cash_counts');
     }
 };

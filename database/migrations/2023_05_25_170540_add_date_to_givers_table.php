@@ -11,11 +11,8 @@ return new class extends Migration
      */
     public function up(): void
     {
-        Schema::create('area', function (Blueprint $table) {
-            $table->id();
-            $table->string('church_name');
-            $table->longText('address')->nullable();
-            $table->timestamps();
+        Schema::table('givers', function (Blueprint $table) {
+            $table->date('date');
         });
     }
 
@@ -24,6 +21,8 @@ return new class extends Migration
      */
     public function down(): void
     {
-        Schema::dropIfExists('area');
+        Schema::table('givers', function (Blueprint $table) {
+            //
+        });
     }
 };
