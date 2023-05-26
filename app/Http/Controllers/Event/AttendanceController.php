@@ -13,66 +13,54 @@ class AttendanceController extends Controller
 {
     public function index()
     {
-        $attendance = Attendance::with('events', 'member')->get();
+        $events=Event::all();
+        $members=Member::all();
 
-        return view('attendance.index', compact('attendance'));
+        return view('attendance.index', compact('events', 'members'));
     }
 
     public function store(Request $request)
-    {
-        $event_id = $request->input('event_id');
-        $members = $request->input('members', []);
-        $memberNames = $request->input('member_names', []);
-        $presentStatus = $request->input('present', []);
+{
+    $event_id = $request->input('event_id');
+    $members = $request->input('member_id', []);
+    $presentStatus = $request->input('present', []);
 
-        // Retrieve the event object
-        $event = Event::find($event_id);
+    // Retrieve the event object
+    $event = Event::find($event_id);
 
-        // Check if the event exists
-        if ($event) {
-            // Update the 'done' property of the event
-            $event->done = 1;
-            $event->save();
+    // Check if the event exists
+    if ($event) {
+        // Update the 'done' property of the event
+        $event->done = 1;
+        $event->save();
 
-            // Save attendance for each member
-            foreach ($members as $index => $memberId) {
-                $memberName = $memberNames[$index];
-                $present = isset($presentStatus[$index]);
+        // Save attendance for each member
+        foreach ($members as $index => $memberId) {
+            $present = isset($presentStatus[$index]);
 
-                $attendanceData = [
-                    'event_id' => $event_id,
-                    'member_name' => $memberName,
-                    'present' => $present,
-                ];
+            $attendanceData = [
+                'event_id' => $event_id,
+                'member_id' => $memberId,
+                'present' => $present,
+            ];
 
-                Attendance::create($attendanceData);
-            }
-
-            return redirect()->back()->with('success', 'Attendance saved successfully.');
+            Attendance::create($attendanceData);
         }
 
-        return redirect()->back()->with('error', 'Event not found.');
+        return redirect()->back()->with('success', 'Attendance saved successfully.');
     }
+
+    return redirect()->back()->with('error', 'Event not found.');
+}
+
 
 
     public function viewAttendance()
     {
-        $attendance = Attendance::all();
-        $eventIds = $attendance->pluck('event_id')->unique();
-        $events = Event::whereIn('id', $eventIds)->get();
+        $attendance = Attendance::join('events', 'events.id', '=', 'attendance.event_id')->join('members', 'members.id', '=', 'attendance.member_id');
 
-        // Fetch member names and attendance status for each event
-        foreach ($events as $event) {
-            $eventAttendance = $attendance->where('event_id', $event->id);
-            $event->attendances = $eventAttendance->map(function ($attendance) {
-                return [
-                    'member_name' => $attendance->member_name,
-                    'status' => $attendance->present ? 'Present' : 'Absent',
-                ];
-            });
-        }
-
-        return view('attendance.view', compact('events'));
+        return view('attendance.view', compact('attendances', 'eventIds'));
     }
+
 
 }

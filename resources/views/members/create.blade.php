@@ -7,7 +7,7 @@
             <div class="card-header pb-0 px-3">
                 <h2 class="mb-0">{{ __('Add New Member') }}</h2>
                 <div class="pull-right">
-                    <a class="btn btn-primary" href="{{ route('members.index') }}"> Back</a>
+                    <a class="btn btn-primary" href="{{ route('member.index') }}"> Back</a>
                 </div>
             </div>
             <div class="card-body pt-4 p-3">
@@ -29,7 +29,7 @@
                     </div>
                     @endif
                     
-                    <form action="{{ route('members.store') }}" method="POST">
+                    <form action="{{ route('member.store') }}" method="POST">
                         @csrf
                     
                         <div class="row">
