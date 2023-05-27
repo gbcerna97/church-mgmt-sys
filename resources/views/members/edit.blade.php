@@ -6,7 +6,7 @@
         <div class="card">
             <div class="card-header pb-0 px-3">
                 <h2 class="mb-0">{{ __('Edit Member Info') }}</h2>
-                <div class="pull-right">
+                <div class="pull-left">
                     <a class="btn btn-primary" href="{{ route('member.index') }}"> Back</a>
                 </div>
             </div>
@@ -43,8 +43,12 @@
                             <div class="col-xs-12 col-sm-12 col-md-12 mb-3">
                                 <div class="form-group">
                                     <strong>Sex:</strong>
-                                    <input type="text" name="sex" value="{{ $member->sex }}" class="form-control" placeholder="Name">
-                                </div>
+                                    <select name="sex" id="sex" class="form-control">
+                                        <option value="" disabled>Select sex...</option>
+                                        <option value="Male" @if($member->sex == 'Male') selected @endif>Male</option>
+                                        <option value="Female" @if($member->sex == 'Female') selected @endif>Female</option>
+                                    </select>
+                                </div>                                
                             </div>
                             <div class="col-xs-12 col-sm-12 col-md-12 mb-3">
                                 <div class="form-group">

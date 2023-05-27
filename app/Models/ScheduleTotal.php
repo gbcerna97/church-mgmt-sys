@@ -15,7 +15,6 @@ class ScheduleTotal extends Model
         'sanctuary',
         'love_gift',
         'dance_ministry',
-        'grand_total',
     ];
 
     public function area(): BelongsTo

@@ -4,6 +4,7 @@ namespace App\Models;
 
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
+use Illuminate\Database\Eloquent\Relations\BelongsToMany;
 
 class Attendance extends Model
 {
@@ -29,9 +30,9 @@ class Attendance extends Model
     /**
      * Get the member associated with the attendance.
      */
-    public function member(): BelongsTo
+    public function member(): BelongsToMany
     {
-        return $this->belongsTo(Member::class);
+        return $this->belongsToMany(Member::class);
     }
 
     /**

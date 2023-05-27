@@ -5,9 +5,9 @@
     <div class="container-fluid py-4">
         <div class="card">
             <div class="card-header pb-0 px-3">
-                <h2 class="mb-0">{{ __('Giver Management') }}</h2>
-                <div class="pull-right">
-                    <a class="btn btn-success" href="{{ route('giver.create') }}"> Add Giver Record</a>
+                <h2 class="mb-0">{{ __('Account Classification Management') }}</h2>
+                <div class="pull-left">
+                    <a class="btn btn-success" href="" data-bs-toggle="tooltip" data-bs-placement="top" title="View General Balance">View Balance</a>
                 </div>
             </div>
             <div class="card-body pt-4 p-3">
@@ -21,35 +21,25 @@
                     <table class="table table-bordered">
                         <tr>
                             <th>No</th>
-                            <th>Giver Name</th>
                             <th>Date</th>
                             <th>Total</th>
                             <th width="280px">Action</th>
                         </tr>
-                        @foreach ($givers as $giver)
+                        @foreach ($dates as $date)
                         <tr>
                             <td>{{ ++$i }}</td>
-                            <td>{{ $giver->giver_name }}</td>
-                            <td>{{ $giver->date }}</td>
-                            <td>Php {{ $giver->sum }}</td>
+                            <td>{{ date('F d, Y', strtotime($date)) }}</td>
                             <td>
-                                <form action="{{ route('giver.destroy',$giver->id) }}" method="POST">
-                
-                                    <a class="btn btn-info" href="{{ route('giver.show',$giver->id) }}">Show</a>
-                    
-                                    <a class="btn btn-primary" href="{{ route('giver.edit',$giver->id) }}">Edit</a>
-                
-                                    @csrf
-                                    @method('DELETE')
-                    
-                                    <button type="submit" class="btn btn-danger">Delete</button>
-                                </form>
+                                @if (isset($funds[$date]))
+                                    Php {{ $funds[$date]->fund }}
+                                @endif
                             </td>
-                        </tr>
+                            <td>
+                                <a class="btn btn-info" href="{{ route('accounting.show',$date) }}" data-bs-toggle="tooltip" data-bs-placement="top" title="View"><i class="fa fa-eye"></i></a>
+                            </td>
                         @endforeach
                     </table>
                 
-                    {!! $givers->links() !!}
                 </div>        
             </div>
         </div>

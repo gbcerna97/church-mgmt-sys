@@ -6,7 +6,7 @@
         <div class="card">
             <div class="card-header pb-0 px-3">
                 <h2 class="mb-0">{{ __('Membership Management') }}</h2>
-                <div class="pull-right">
+                <div class="pull-left">
                     <a class="btn btn-success" href="{{ route('member.create') }}" data-bs-toggle="tooltip" data-bs-placement="top" title="Add New Member">Add New</a>
                 </div>
             </div>

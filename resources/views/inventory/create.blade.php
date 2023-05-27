@@ -7,7 +7,7 @@
         <div class="card">
             <div class="card-header pb-0 px-3">
                 <h2 class="mb-0">{{ __('Add New Product') }}</h2>
-                <div class="pull-right">
+                <div class="pull-left">
                     <a class="btn btn-primary" href="{{ route('inventory.index') }}"> Back</a>
                 </div>
             </div>
@@ -60,13 +60,13 @@
                             </div>
                             <div class="col-xs-12 col-sm-12 col-md-12 mb-3">
                                 <div class="form-group">
-                                    <strong>Unit Cost(PHP):</strong>
+                                    <strong>Unit Cost in Php:</strong>
                                     <input type="text" name="unit_cost" class="form-control" placeholder="Unit Cost">
                                 </div>
                             </div>
                             <div class="col-xs-12 col-sm-12 col-md-12 mb-3">
                                 <div class="form-group">
-                                    <strong>Total(PHP):</strong>
+                                    <strong>Total in Php:</strong>
                                     <input type="price" name="total_cost" class="form-control" placeholder="Total Cost">
                                 </div>
                             </div>

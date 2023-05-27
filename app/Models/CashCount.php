@@ -1,12 +1,25 @@
 <?php
 
-namespace App;
+namespace App\Models;
 
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\BelongsTo;
 
 class CashCount extends Model
 {
+
+     /**
+     * The table associated with the model.
+     *
+     * @var string
+     */
+    protected $table = 'cash_counts';
+
+    /**
+     * The attributes that are mass assignable.
+     *
+     * @var array
+     */
 
     protected $fillable = [
         'date',

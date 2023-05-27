@@ -14,7 +14,6 @@ return new class extends Migration
         Schema::create('cash_counts', function (Blueprint $table) {
             $table->id();
             $table->date('date');
-            $table->unsignedBigInteger('church_id');
             $table->integer('cc_1000')->nullable();
             $table->integer('cc_500')->nullable();
             $table->integer('cc_200')->nullable();
@@ -30,8 +29,6 @@ return new class extends Migration
             $table->float('cc_0_01')->nullable();
             $table->float('total')->nullable();
             $table->timestamps();
-
-            $table->foreign('church_id')->references('id')->on('church');
         });
     }
 

@@ -7,10 +7,15 @@ use App\Http\Controllers\RegisterController;
 use App\Http\Controllers\ResetController;
 use App\Http\Controllers\SessionsController;
 use App\Http\Controllers\Finance\GiverController;
+use App\Http\Controllers\Finance\CashCountController;
+use App\Http\Controllers\Finance\FinanceController;
+use App\Http\Controllers\Finance\DisbursementController;
+use App\Http\Controllers\Finance\DisbursementRequestController;
+use App\Http\Controllers\Finance\DonationController;
 use App\Http\Controllers\Event\AttendanceController;
 use App\Http\Controllers\Event\EventController;
 use App\Http\Controllers\Membership\MemberController;
-use App\Http\Controllers\InventoryController;
+use App\Http\Controllers\Inventory\InventoryController;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Password;
 use Illuminate\Support\Facades\Route;
@@ -29,6 +34,7 @@ use Illuminate\Support\Facades\Route;
 
 Route::middleware('auth:sanctum')->group(function () {
 
+    // Authentication routes
     Route::get('/', [HomeController::class, 'dashboard']);
 	Route::get('dashboard', function () {
 		return view('dashboard');
@@ -40,18 +46,25 @@ Route::middleware('auth:sanctum')->group(function () {
 		return view('dashboard');
 	})->name('user.login');
 
-    Route::resource('giver', GiverController::class)->only([
-        'index', 'create', 'store', 'show', 'edit', 'update', 'destroy'
-    ])->names([
-        'index' => 'giver.index',
-        'create' => 'giver.create',
-        'store' => 'giver.store',
-        'show' => 'giver.show',
-        'edit' => 'giver.edit',
-        'update' => 'giver.update',
-        'destroy' => 'giver.destroy'
-    ]);
+    // Givers resource routes
+    Route::resource('giver', GiverController::class);
 
+    // Givers resource routes
+    Route::resource('donation', DonationController::class);
+
+    // Finance resource routes
+    Route::resource('accounting', FinanceController::class);
+
+    // Disbursement requests resource routes
+    Route::resource('request', DisbursementRequestController::class);
+
+    // Disbursement resource routes
+    Route::resource('disbursement', DisbursementController::class);
+
+    // Cash counts resource routes
+    Route::resource('cashcount', CashCountController::class);
+    
+    // Members resource routes
     Route::resource('member', MemberController::class);
 
     // Inventory resource routes

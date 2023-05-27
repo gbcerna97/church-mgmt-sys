@@ -45,7 +45,7 @@ class MemberController extends Controller
 
         Member::create($request->all());
 
-        return redirect()->route('members.index')->with('success','Member Added Successfully.');
+        return redirect()->route('member.index')->with('success','Member Added Successfully.');
     }
 
     /**
@@ -84,7 +84,7 @@ class MemberController extends Controller
 
         $member->update($request->all());
 
-        return redirect()->route('members.index')->with('success','Member Updated Successfully.');
+        return redirect()->route('member.index')->with('success','Member Updated Successfully.');
     }
 
     /**
@@ -94,7 +94,7 @@ class MemberController extends Controller
     {
         $member->delete();
 
-        return redirect()->route('members.index')->with('success','Member deleted successfully');
+        return redirect()->route('member.index')->with('success','Member deleted successfully');
     }
 
 

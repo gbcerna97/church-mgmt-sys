@@ -6,7 +6,7 @@
         <div class="card">
             <div class="card-header pb-0 px-3">
                 <h2 class="mb-0">{{ __('Inventory Management') }}</h2>
-                <div class="pull-right">
+                <div class="pull-left">
                     <a class="btn btn-success" href="{{ route('inventory.create') }}" data-bs-toggle="tooltip" data-bs-placement="top" title="Add New Purchased Item">Add New</a>
                 </div>
             </div>
@@ -32,8 +32,8 @@
                             <td>{{ ++$i }}</td>
                             <td>{{ $product->inventName }}</td>
                             <td>{{ $product->category }}</td>
-                            <td>{{ $product->date_purchased }}</td>
-                            <td>Php {{$product->total_cost}}</td>
+                            <td>{{ date('F d, Y', strtotime($product->date_purchased)) }}</td>
+                            <td>Php{{$product->total_cost}}</td>
                             <td>
                                 <form action="{{ route('inventory.destroy',$product->id) }}" method="POST">
                 

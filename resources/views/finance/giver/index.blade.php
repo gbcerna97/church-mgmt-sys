@@ -6,8 +6,9 @@
         <div class="card">
             <div class="card-header pb-0 px-3">
                 <h2 class="mb-0">{{ __('Giver Management') }}</h2>
-                <div class="pull-right">
+                <div class="pull-left">
                     <a class="btn btn-success" href="{{ route('giver.create') }}" data-bs-toggle="tooltip" data-bs-placement="top" title="Add New Giver Record">Add New</a>
+                    <a class="btn btn-info" href="{{ route('cashcount.create') }}" data-bs-toggle="tooltip" data-bs-placement="top" title="Cash Count For Specific Date">Add Cash Count</a>
                 </div>
             </div>
             <div class="card-body pt-4 p-3">
@@ -30,10 +31,10 @@
                         <tr>
                             <td>{{ ++$i }}</td>
                             <td>{{ $giver->giver_name }}</td>
-                            <td>{{ $giver->date }}</td>
-                            <td>Php {{ $giver->sum }}</td>
+                            <td>{{ date('F d, Y', strtotime($giver->date)) }}</td>
+                            <td>Php {{ $giver->total }}</td>
                             <td>
-                                <form action="{{ route('giver.destroy',$giver->id) }}" method="POST">
+                                <form action="{{ route('giver.destroy', $giver->id) }}" method="POST">
                 
                                     <a class="btn btn-info" href="{{ route('giver.show',$giver->id) }}" data-bs-toggle="tooltip" data-bs-placement="top" title="View"><i class="fa fa-eye"></i></a>
                     
@@ -49,7 +50,6 @@
                         @endforeach
                     </table>
                 
-                    {!! $givers->links() !!}
                 </div>        
             </div>
         </div>

@@ -6,7 +6,7 @@
         <div class="card">
             <div class="card-header pb-0 px-3">
                 <h2 class="mb-0">{{ __('Edit Event Info') }}</h2>
-                <div class="pull-right">
+                <div class="pull-left">
                     <a class="btn btn-primary" href="{{ route('events.index') }}"> Back</a>
                 </div>
             </div>

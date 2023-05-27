@@ -46,13 +46,13 @@
                         <div class="col-xs-12 col-sm-12 col-md-12 mb-2">
                             <div class="form-group">
                                 <strong>Unit Cost:</strong>
-                                Php {{ $inventory->unit_cost }}
+                                Php{{ $inventory->unit_cost }}
                             </div>
                         </div>
                         <div class="col-xs-12 col-sm-12 col-md-12 mb-2">
                             <div class="form-group">
                                 <strong>Grand Total:</strong>
-                                Php {{ $inventory->total_cost }}
+                                Php{{ $inventory->total_cost }}
                             </div>
                         </div>
                     </div>

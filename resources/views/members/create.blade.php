@@ -6,8 +6,8 @@
         <div class="card">
             <div class="card-header pb-0 px-3">
                 <h2 class="mb-0">{{ __('Add New Member') }}</h2>
-                <div class="pull-right">
-                    <a class="btn btn-primary" href="{{ route('members.index') }}"> Back</a>
+                <div class="pull-left">
+                    <a class="btn btn-primary" href="{{ route('member.index') }}"> Back</a>
                 </div>
             </div>
             <div class="card-body pt-4 p-3">
@@ -29,7 +29,7 @@
                     </div>
                     @endif
                     
-                    <form action="{{ route('members.store') }}" method="POST">
+                    <form action="{{ route('member.store') }}" method="POST">
                         @csrf
                     
                         <div class="row">
@@ -48,7 +48,11 @@
                             <div class="col-xs-12 col-sm-12 col-md-12 mb-3">
                                 <div class="form-group">
                                     <strong>Sex:</strong>
-                                    <input type="text" name="sex" class="form-control" placeholder="Sex">
+                                    <select name="sex" id="sex" class="form-control">
+                                        <option value="" disabled selected>Select sex...</option>
+                                        <option value="Male">Male</option>
+                                        <option value="Female">Female</option>
+                                    </select>
                                 </div>
                             </div>
                             <div class="col-xs-12 col-sm-12 col-md-12 mb-3">

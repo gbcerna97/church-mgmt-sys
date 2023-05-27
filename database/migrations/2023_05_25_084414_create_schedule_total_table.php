@@ -14,7 +14,6 @@ return new class extends Migration
         Schema::create('schedule_totals', function (Blueprint $table) {
             $table->id();
             $table->date('date');
-            $table->unsignedBigInteger('church_id');
             $table->float('tithe');
             $table->float('offering');
             $table->float('mission');
@@ -25,8 +24,6 @@ return new class extends Migration
             $table->float('total_cheque');
             $table->float('grand_total');
             $table->timestamps();
-
-            $table->foreign('church_id')->references('id')->on('church');
         });
     }
 
