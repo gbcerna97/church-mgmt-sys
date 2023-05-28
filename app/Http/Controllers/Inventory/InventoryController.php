@@ -40,10 +40,19 @@ class InventoryController extends Controller
             'date_purchased' => 'required',
             'item_num' => 'required',
             'unit_cost' => 'required',
-            'total_cost' => 'required',
         ]);
 
-        Inventory::create($request->all());
+        // Aggregate the fields
+        $total_cost = $request->item_num * $request->unit_cost;
+
+        $inventory = new Inventory;
+        $inventory->inventName = $request->inventName;
+        $inventory->inventName = $request->inventName;
+        $inventory->category = $request->category;
+        $inventory->date_purchased = $request->date_purchased;
+        $inventory->item_num = $request->item_num;
+        $inventory->total_cost = $total_cost;
+        $inventory->save();
 
         return redirect()
             ->route('inventory.index')
@@ -78,10 +87,17 @@ class InventoryController extends Controller
             'date_purchased' => 'required',
             'item_num' => 'required',
             'unit_cost' => 'required',
-            'total_cost' => 'required',
         ]);
 
-        $inventory->update($request->all());
+        $total_cost = $request->item_num * $request->unit_cost;
+
+        $inventory->inventName = $request->inventName;
+        $inventory->inventName = $request->inventName;
+        $inventory->category = $request->category;
+        $inventory->date_purchased = $request->date_purchased;
+        $inventory->item_num = $request->item_num;
+        $inventory->total_cost = $total_cost;
+        $inventory->update();
 
         return redirect()
             ->route('inventory.index')

@@ -17,25 +17,25 @@
                         <div class="col-xs-12 col-sm-12 col-md-12 mb-2">
                             <div class="form-group">
                                 <strong>Event Name:</strong>
-                                {{ $event->title }}
+                                <input type="text" class="form-control" value="{{ $event->title }}" readonly>
                             </div>
                         </div>
                         <div class="col-xs-12 col-sm-12 col-md-12 mb-2">
                             <div class="form-group">
                                 <strong>Date:</strong>
-                                {{ $event->date }}
+                                <input type="text" class="form-control" value="{{ date('F d, Y', strtotime($event->date)) }}" readonly>
                             </div>
                         </div>
                         <div class="col-xs-12 col-sm-12 col-md-12 mb-2">
                             <div class="form-group">
                                 <strong>Venue:</strong>
-                                {{ $event->venue }}
+                                <input type="text" class="form-control" value="{{ $event->venue }}" readonly>
                             </div>
                         </div>
                         <div class="col-xs-12 col-sm-12 col-md-12 mb-2">
                             <div class="form-group">
                                 <strong>Description:</strong>
-                                {{ $event->description }}
+                                <input type="text" class="form-control" value="{{ $event->description }}" readonly>
                             </div>
                         </div>
                        

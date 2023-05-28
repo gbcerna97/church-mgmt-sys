@@ -16,43 +16,43 @@
                         <div class="col-xs-12 col-sm-12 col-md-12 mb-2">
                             <div class="form-group">
                                 <strong>Product Name:</strong>
-                                {{ $inventory->inventName }}
+                                <input type="text" class="form-control" value="{{$inventory->inventName}}" readonly>
                             </div>
                         </div>
                         <div class="col-xs-12 col-sm-12 col-md-12 mb-2">
                             <div class="form-group">
                                 <strong>Ministry Name:</strong>
-                                {{ $inventory->ministryName }}
+                                <input type="text" class="form-control" value="{{ $inventory->ministryName }}" readonly>
                             </div>
                         </div>
                         <div class="col-xs-12 col-sm-12 col-md-12 mb-2">
                             <div class="form-group">
                                 <strong>Category:</strong>
-                                {{ $inventory->category }}
+                                <input type="text" class="form-control" value="{{ $inventory->category }}" readonly>
                             </div>
                         </div>
                         <div class="col-xs-12 col-sm-12 col-md-12 mb-2">
                             <div class="form-group">
                                 <strong>Purchase Date:</strong>
-                                {{ $inventory->date_purchased }}
+                                <input type="text" class="form-control" value="{{ date('F d, Y', strtotime($inventory->date_purchased)) }}" readonly>
                             </div>
                         </div>
                         <div class="col-xs-12 col-sm-12 col-md-12 mb-2">
                             <div class="form-group">
                                 <strong>Number of Units:</strong>
-                                {{ $inventory->item_num }}
+                                <input type="text" class="form-control" value="{{ $inventory->item_num }}" readonly>
                             </div>
                         </div>
                         <div class="col-xs-12 col-sm-12 col-md-12 mb-2">
                             <div class="form-group">
                                 <strong>Unit Cost:</strong>
-                                Php{{ $inventory->unit_cost }}
+                                {{ $inventory->unit_cost }}<input type="text" class="form-control" value="Php  {{ $inventory->unit_cost }}" readonly>
                             </div>
                         </div>
                         <div class="col-xs-12 col-sm-12 col-md-12 mb-2">
                             <div class="form-group">
                                 <strong>Grand Total:</strong>
-                                Php{{ $inventory->total_cost }}
+                                {{ $inventory->unit_cost }}<input type="text" class="form-control" value="Php {{ $inventory->total_cost }}" readonly>
                             </div>
                         </div>
                     </div>

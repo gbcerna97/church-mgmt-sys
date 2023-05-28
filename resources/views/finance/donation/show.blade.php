@@ -16,32 +16,32 @@
                         <div class="col-xs-12 col-sm-12 col-md-12 mb-2">
                             <div class="form-group">
                                 <strong>Donor Name:</strong>
-                                {{ $donation->donor_name }}
+                                <input type="text" class="form-control" value="{{ $donation->donor_name }}" readonly>
                             </div>
                         </div>
                         <div class="col-xs-12 col-sm-12 col-md-12 mb-2">
                             <div class="form-group">
                                 <strong>Date:</strong>
-                                {{ $donation->date }}
+                                <input type="text" class="form-control" value="{{ $donation->date }}" readonly>
                             </div>
                         </div>
                         <div class="col-xs-12 col-sm-12 col-md-12 mb-2">
                             <div class="form-group">
                                 <strong>Donation type:</strong>
-                                {{ $donation->donation_type }}
+                                <input type="text" class="form-control" value="{{ $donation->donation_type }}" readonly>
                             </div>
                         </div>
                         <div class="col-xs-12 col-sm-12 col-md-12 mb-2">
                             <div class="form-group">
                                 <strong>Donation name:</strong>
-                                {{ $donation->donation_name }}
+                                <input type="text" class="form-control" value="{{ $donation->donation_name }}" readonly>
                             </div>
                         </div>
                         <div class="col-xs-12 col-sm-12 col-md-12 mb-2">
                             <div class="form-group">
                                 <strong>Amount:</strong>
                                 @if ($donation->amount)
-                                    Php {{ $donation->amount }}
+                                    <input type="text" class="form-control" value="Php {{ $donation->amount }}" readonly>
                                 @endif
                             </div>
                         </div>

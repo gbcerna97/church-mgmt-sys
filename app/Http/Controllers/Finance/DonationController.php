@@ -5,6 +5,7 @@ namespace App\Http\Controllers\Finance;
 use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
 use App\Models\Donation;
+use App\Models\ChurchInfo;
 
 class DonationController extends Controller
 {
@@ -35,9 +36,18 @@ class DonationController extends Controller
             'donor_name' => 'required',
             'date' => 'required',
             'donation_type' => 'required',
+            'amount' => 'required_if:donation_type,monetary', // Validation rule for amount if donation_type is monetary
         ]);
 
-        Donation::create($request->all());
+        $donation = Donation::create($request->all());
+
+        // Check if donation type is monetary and set donations_funds value accordingly
+        if ($donation->amount) {
+            $church = ChurchInfo::first();
+            $church->donations_funds += $donation->amount;
+            $church->overall_funds += $donation->amount;
+            $church->save();
+        }
 
         return redirect()->route('donation.index')->with('success','Record Added Successfully.');
     }
@@ -61,22 +71,50 @@ class DonationController extends Controller
     /**
      * Update the specified resource in storage.
      */
-    public function update(Request $request, string $id)
+    public function update(Request $request, Donation $donation)
     {
-        
-        $giver = CashCount::findorFail($id);
-        $giver->update($giver);
+        $request->validate([
+            'donor_name' => 'required',
+            'date' => 'required',
+            'donation_type' => 'required',
+            'amount' => 'required_if:donation_type,monetary', // Validation rule for amount if donation_type is monetary
+        ]);
 
-        return $giver;
+        $oldAmount = $donation->amount;
+        $newAmount = $request->amount;
+
+        // Check if donation type is monetary and update donations_funds value accordingly
+        if ($donation->amount) {
+            $church = ChurchInfo::first();
+            $church->donations_funds -= $oldAmount;
+            $church->donations_funds += $newAmount;
+            $church->overall_funds -= $oldAmount;
+            $church->overall_funds += $newAmount;
+            $church->save();
+        }
+
+        $donation->update($request->all());
+
+        return redirect()->route('donation.index')->with('success','Record Updated Successfully.');
     }
+
 
     /**
      * Remove the specified resource from storage.
      */
-    public function destroy(CashCount $giver)
+    public function destroy(Donation $donation)
     {
-        $giver->delete();
+        // Check if donation type is monetary and subtract donation amount from donations_funds
+        if ($donation->amount) {
+            $church = ChurchInfo::first();
+            $church->donations_funds -= $donation->amount;
+            $church->overall_funds -= $donation->amount;
+            $church->save();
+        }
 
-        return redirect()->route('giver.index')->with('success', 'Record Deleted Succesfully');
+        $donation->delete();
+
+        return redirect()->route('donation.index')->with('success', 'Record Deleted Successfully');
     }
+
 }

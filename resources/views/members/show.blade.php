@@ -17,55 +17,55 @@
                         <div class="col-xs-12 col-sm-12 col-md-12 mb-2">
                             <div class="form-group">
                                 <strong>Name:</strong>
-                                {{ $member->member_name }}
+                                <input type="text" class="form-control" value="{{ $member->member_name }}" readonly>
                             </div>
                         </div>
                         <div class="col-xs-12 col-sm-12 col-md-12 mb-2">
                             <div class="form-group">
                                 <strong>Nickname:</strong>
-                                {{ $member->nickname }}
+                                <input type="text" class="form-control" value="{{ $member->nickname }}" readonly>
                             </div>
                         </div>
                         <div class="col-xs-12 col-sm-12 col-md-12 mb-2">
                             <div class="form-group">
                                 <strong>Sex:</strong>
-                                {{ $member->sex }}
+                                <input type="text" class="form-control" value="{{ $member->sex }}" readonly>
                             </div>
                         </div>
                         <div class="col-xs-12 col-sm-12 col-md-12 mb-2">
                             <div class="form-group">
                                 <strong>Age:</strong>
-                                {{ $member->age }}
+                                <input type="text" class="form-control" value="{{ $member->age }}" readonly>
                             </div>
                         </div>
                         <div class="col-xs-12 col-sm-12 col-md-12 mb-2">
                             <div class="form-group">
                                 <strong>Birthday:</strong>
-                                {{ $member->birthday }}
+                                <input type="text" class="form-control" value="{{ $member->birthday }}" readonly>
                             </div>
                         </div>
                         <div class="col-xs-12 col-sm-12 col-md-12 mb-2">
                             <div class="form-group">
                                 <strong>Contact Number:</strong>
-                                {{ $member->contact_number }}
+                                <input type="text" class="form-control" value="{{ $member->contact_number }}" readonly>
                             </div>
                         </div>
                         <div class="col-xs-12 col-sm-12 col-md-12 mb-2">
                             <div class="form-group">
                                 <strong>Occupation:</strong>
-                                {{ $member->occupation }}
+                                <input type="text" class="form-control" value="{{ $member->occupation }}" readonly>
                             </div>
                         </div>
                         <div class="col-xs-12 col-sm-12 col-md-12 mb-2">
                             <div class="form-group">
                                 <strong>Address:</strong>
-                                {{ $member->address }}
+                                <input type="text" class="form-control" value="{{ $member->address }}" readonly>
                             </div>
                         </div>
                         <div class="col-xs-12 col-sm-12 col-md-12 mb-2">
                             <div class="form-group">
                                 <strong>Address:</strong>
-                                {{ $member->email_add }}
+                                <input type="text" class="form-control" value="{{ $member->email_add }}" readonly>
                             </div>
                         </div>
                     </div>

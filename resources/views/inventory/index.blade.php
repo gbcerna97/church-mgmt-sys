@@ -24,6 +24,8 @@
                             <th>Product</th>
                             <th>Category</th>
                             <th>Date Purchased</th>
+                            <th>Number of Units</th>
+                            <th>Unit Cost</th>
                             <th>Total Cost</th>
                             <th width="280px">Action</th>
                         </tr>
@@ -33,7 +35,9 @@
                             <td>{{ $product->inventName }}</td>
                             <td>{{ $product->category }}</td>
                             <td>{{ date('F d, Y', strtotime($product->date_purchased)) }}</td>
-                            <td>Php{{$product->total_cost}}</td>
+                            <td>{{$product->item_num}}</td>
+                            <td>Php {{$product->unit_cost}}</td>
+                            <td>Php {{$product->total_cost}}</td>
                             <td>
                                 <form action="{{ route('inventory.destroy',$product->id) }}" method="POST">
                 

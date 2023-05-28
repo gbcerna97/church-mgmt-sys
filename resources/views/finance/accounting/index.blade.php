@@ -37,6 +37,7 @@
                             <td>
                                 <a class="btn btn-info" href="{{ route('accounting.show',$date) }}" data-bs-toggle="tooltip" data-bs-placement="top" title="View"><i class="fa fa-eye"></i></a>
                             </td>
+                        </tr>
                         @endforeach
                     </table>
                 

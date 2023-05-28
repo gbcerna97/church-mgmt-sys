@@ -64,12 +64,6 @@
                                     <input type="text" name="unit_cost" class="form-control" value="{{$inventory->unit_cost}}">
                                 </div>
                             </div>
-                            <div class="col-xs-12 col-sm-12 col-md-12 mb-3">
-                                <div class="form-group">
-                                    <strong>Total(PHP):</strong>
-                                    <input type="price" name="total_cost" class="form-control" value="{{$inventory->total_cost}}">
-                                </div>
-                            </div>
                             <div class="col-xs-12 col-sm-12 col-md-12 text-center">
                                 <button type="submit" class="btn btn-primary">Submit</button>
                             </div>

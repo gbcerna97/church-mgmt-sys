@@ -30,8 +30,8 @@
                         <div class="row">
                             <div class="col-xs-12 col-sm-12 col-md-12 mb-3">
                                 <div class="form-group">
-                                    <strong>Giver Name:</strong>
-                                    <input type="text" name="giver_name" class="form-control" value="{{ $giver->giver_name }}">
+                                    <strong>Giver name:</strong>
+                                    <input type="text" name="giver_name" class="form-control" placeholder="Giver name" value="{{ $giver->giver_name }}">
                                 </div>
                             </div>
                             <div class="col-xs-12 col-sm-12 col-md-12 mb-3">
@@ -43,37 +43,37 @@
                             <div class="col-xs-12 col-sm-12 col-md-12 mb-3">
                                 <div class="form-group">
                                     <strong>Tithe:</strong>
-                                    <input type="number" name="tithe" class="form-control" value="{{ $giver->tithe }}">
+                                    <input type="number" name="tithe" class="form-control" placeholder="0.00" value="{{ $giver->tithe }}">
                                 </div>
                             </div>
                             <div class="col-xs-12 col-sm-12 col-md-12 mb-3">
                                 <div class="form-group">
                                     <strong>Offering:</strong>
-                                    <input type="number" name="offering" class="form-control" value="{{ $giver->offering }}">
+                                    <input type="number" name="offering" class="form-control" placeholder="0.00" value="{{ $giver->offering }}">
                                 </div>
                             </div>
                             <div class="col-xs-12 col-sm-12 col-md-12 mb-3">
                                 <div class="form-group">
                                     <strong>Mission:</strong>
-                                    <input type="number" name="mission" class="form-control" value="{{ $giver->mission}}">
+                                    <input type="number" name="mission" class="form-control" placeholder="0.00" value="{{ $giver->mission}}">
                                 </div>
                             </div>
                             <div class="col-xs-12 col-sm-12 col-md-12 mb-3">
                                 <div class="form-group">
                                     <strong>Sanctuary:</strong>
-                                    <input type="number" name="sanctuary" class="form-control" value="{{ $giver->sanctuary }}">
+                                    <input type="number" name="sanctuary" class="form-control" placeholder="0.00" value="{{ $giver->sanctuary }}">
                                 </div>
                             </div>
                             <div class="col-xs-12 col-sm-12 col-md-12 mb-3">
                                 <div class="form-group">
                                     <strong>Love Gift:</strong>
-                                    <input type="number" name="love_gift" class="form-control" value="{{ $giver->love_gift }}">
+                                    <input type="number" name="love_gift" class="form-control" placeholder="0.00" value="{{ $giver->love_gift }}">
                                 </div>
                             </div>
                             <div class="col-xs-12 col-sm-12 col-md-12 mb-3">
                                 <div class="form-group">
                                     <strong>Dance Ministry:</strong>
-                                    <input type="text" name="dance_ministry" class="form-control" value="{{ $giver->dance_ministry }}">
+                                    <input type="text" name="dance_ministry" class="form-control" placeholder="0.00" value="{{ $giver->dance_ministry }}">
                                 </div>
                             </div>
                             <div class="col-xs-12 col-sm-12 col-md-12 text-center">

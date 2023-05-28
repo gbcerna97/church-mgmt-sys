@@ -20,6 +20,8 @@ class Giver extends Model
         'sanctuary',
         'love_gift',
         'dance_ministry',
+        'is_cash',
+        'is_cheque'
     ];
 
     public function church(): BelongsTo

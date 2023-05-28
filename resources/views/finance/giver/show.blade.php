@@ -15,64 +15,64 @@
                     <div class="row">
                         <div class="col-xs-12 col-sm-12 col-md-12 mb-2">
                             <div class="form-group">
-                                <strong>Giver Name:</strong>
-                                {{ $giver->giver_name }}
+                                <strong>Giver name:</strong>
+                                <input type="text" class="form-control" value="{{ $giver->giver_name }}" readonly>
                             </div>
                         </div>
                         <div class="col-xs-12 col-sm-12 col-md-12 mb-2">
                             <div class="form-group">
                                 <strong>Date:</strong>
-                                {{ date('F d, Y', strtotime($giver->date)) }}
+                                <input type="text" class="form-control" value="{{ date('F d, Y', strtotime($giver->date)) }}" readonly>
                             </div>
                         </div>
+                        @if ($giver->tithe)
                         <div class="col-xs-12 col-sm-12 col-md-12 mb-2">
                             <div class="form-group">
                                 <strong>Tithe:</strong>
-                                @if ($giver->tithe)
-                                    Php{{ $giver->tithe }}
-                                @endif
+                                <input type="text" class="form-control" value="Php {{ $giver->tithe }}" readonly>
                             </div>
                         </div>
+                        @endif
+                        @if ($giver->offering)
                         <div class="col-xs-12 col-sm-12 col-md-12 mb-2">
                             <div class="form-group">
                                 <strong>Offering:</strong>
-                                @if ($giver->offering)
-                                    Php{{ $giver->offering }}
-                                @endif
+                                <input type="text" class="form-control" value="Php {{ $giver->offering }}" readonly>
                             </div>
                         </div>
+                        @endif
+                        @if ($giver->mission)
                         <div class="col-xs-12 col-sm-12 col-md-12 mb-2">
                             <div class="form-group">
                                 <strong>Mission:</strong>
-                                @if ($giver->mission)
-                                    Php{{ $giver->mission }}
-                                @endif
+                                <input type="text" class="form-control" value="Php {{ $giver->mission }}" readonly>
                             </div>
                         </div>
+                        @endif
+                        @if ($giver->sanctuary)
                         <div class="col-xs-12 col-sm-12 col-md-12 mb-2">
                             <div class="form-group">
                                 <strong>Sanctuary:</strong>
-                                @if ($giver->sanctuary)
-                                    Php{{ $giver->sanctuary }}
-                                @endif
+                                <input type="text" class="form-control" value="Php {{ $giver->sanctuary }}" readonly>
                             </div>
                         </div>
+                        @endif
+                        @if ($giver->love_gift)
                         <div class="col-xs-12 col-sm-12 col-md-12 mb-2">
                             <div class="form-group">
                                 <strong>Love Gift:</strong>
-                                @if ($giver->love_gift)
-                                    Php{{ $giver->love_gift }}
-                                @endif
+                                <input type="text" class="form-control" value="Php {{ $giver->love_gift }}" readonly>
                             </div>
                         </div>
+                        @endif
+                        @if ($giver->dance_ministry)
                         <div class="col-xs-12 col-sm-12 col-md-12 mb-2">
                             <div class="form-group">
                                 <strong>Dance Ministry:</strong>
-                                @if ($giver->dance_ministry)
-                                    Php{{ $giver->dance_ministry }}
-                                @endif
+                                <input type="text" class="form-control" value="Php {{ $giver->dance_ministry }}" readonly>
                             </div>
-                        </div>                        
+                        </div>  
+                        @endif                      
                     </div>
                 </div>        
             </div>

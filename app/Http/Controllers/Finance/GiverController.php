@@ -6,6 +6,7 @@ use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
 use App\Models\Giver;
 use App\Models\Fund;
+use App\Models\ChurchInfo;
 use DataTables;
 use Illuminate\Support\Facades\DB;
 
@@ -60,6 +61,11 @@ class GiverController extends Controller
 
         // Check if the date already exists in the funds table
         $existingFund = Fund::where('date', $request->date)->first();
+        $church = ChurchInfo::first();
+
+        $church->givers_funds += $total;
+        $church->overall_funds += $total;
+        $church->save();
 
         if ($existingFund) {
             // Update the existing fund total
@@ -120,6 +126,13 @@ class GiverController extends Controller
 
         // Update the fund balance
         $existingFund = Fund::where('date', $request->date)->first();
+        $church = ChurchInfo::first();
+
+        $church->givers_funds -= $oldTotal;
+        $church->govers_funds += $newTotal;
+        $church->overall_funds -= $oldTotal;
+        $church->overall_funds += $newTotal;
+        $church->save();
 
         if ($existingFund) {
             // Deduct the old total and add the new total to the fund balance
@@ -136,6 +149,21 @@ class GiverController extends Controller
      */
     public function destroy(Giver $giver)
     {
+        // Check if the date already exists in the funds table
+        $existingFund = Fund::where('date', $giver->date)->first();
+        $church = ChurchInfo::first();
+
+        $church->givers_funds -= $giver->total;
+        $church->overall_funds -= $giver->total;
+        $church->save();
+
+        if ($existingFund) {
+            // Update the existing fund total
+            $existingFund->fund -= $giver->total;
+            
+            $existingFund->save();
+        }
+
         $giver->delete();
 
         return redirect()->route('giver.index')->with('success', 'Record Deleted Succesfully');

@@ -35,8 +35,8 @@
                         <div class="row">
                             <div class="col-xs-12 col-sm-12 col-md-12 mb-3">
                                 <div class="form-group">
-                                    <strong>Giver Name:</strong>
-                                    <input type="text" name="giver_name" class="form-control" placeholder="Giver Name">
+                                    <strong>Giver name:</strong>
+                                    <input type="text" name="giver_name" class="form-control" placeholder="Giver name">
                                 </div>
                             </div>
                             <div class="col-xs-12 col-sm-12 col-md-12 mb-3">

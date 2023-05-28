@@ -5,6 +5,7 @@ namespace App\Http\Controllers\Finance;
 use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
 use App\Models\Disbursement;
+use App\Models\ChurchInfo;
 use App\Models\DisbursementRequest;
 
 class DisbursementController extends Controller
@@ -38,6 +39,10 @@ class DisbursementController extends Controller
         $request->validate([
             'request_id' => 'required',
         ]);
+        
+        $church = ChurchInfo::first();
+        $church->overall_funds -= $request->unit_price;
+        $church->save();
 
         Disbursement::create($request->all());
 
@@ -49,7 +54,7 @@ class DisbursementController extends Controller
      */
     public function show(Disbursement $disbursement)
     {
-        return view('finance.disbursement.show',compact('giver'));
+        return view('finance.disbursement.show',compact('disbursement'));
     }
 
     /**
@@ -67,9 +72,21 @@ class DisbursementController extends Controller
      */
     public function update(Request $request, Disbursement $disbursement)
     {
-        
-        $disbursement->update($request->all());
 
+        $request->validate([
+            'request_id' => 'required',
+        ]);
+
+        $oldUnitPrice = $disbursement->unit_price;
+        $newUnitPrice = $request->unit_price;
+
+        $church = ChurchInfo::first();
+        $church->overall_funds += $oldUnitPrice;
+        $church->overall_funds -= $newUnitPrice;
+        $church->save();
+
+        $disbursement->update($request->all());
+        
         return redirect()
             ->route('disbursement.index')
             ->with('success', 'Product Updated Successfully.');
@@ -80,6 +97,9 @@ class DisbursementController extends Controller
      */
     public function destroy(Disbursement $disbursement)
     {
+        $church = ChurchInfo::first();
+        $church->overall_funds += $disbursement->unit_price;
+
         $disbursement->delete();
 
         return redirect()->route('disbursement.index')->with('success', 'Record Deleted Succesfully');

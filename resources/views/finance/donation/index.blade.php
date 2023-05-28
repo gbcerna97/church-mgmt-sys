@@ -24,8 +24,8 @@
                             <th>Donor Name</th>
                             <th>Date</th>
                             <th>Donation Type</th>
-                            <th>Donation Name <small>(for non-monetary donations)</small></th>
-                            <th>Amount <small>(for monetary donations)</small></th>
+                            <th>Donation Name <br><small>(for non-monetary donations)</small></th>
+                            <th>Amount <br><small>(for monetary donations)</small></th>
                             <th width="280px">Action</th>
                         </tr>
                         @foreach ($donations as $donation)
