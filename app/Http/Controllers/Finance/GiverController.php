@@ -129,7 +129,7 @@ class GiverController extends Controller
         $church = ChurchInfo::first();
 
         $church->givers_funds -= $oldTotal;
-        $church->govers_funds += $newTotal;
+        $church->givers_funds += $newTotal;
         $church->overall_funds -= $oldTotal;
         $church->overall_funds += $newTotal;
         $church->save();
