@@ -21,6 +21,12 @@ class AttendanceController extends Controller
 
     public function store(Request $request)
 {
+
+    $request->validate([
+        'event_id' => 'required',
+        
+    ]);
+    
     $event_id = $request->input('event_id');
     $members = $request->input('member_id', []);
     $presentStatus = $request->input('present', []);
@@ -59,8 +65,10 @@ class AttendanceController extends Controller
     {
         $attendances = Attendance::join('events', 'events.id', '=', 'attendance.event_id')
             ->join('members', 'members.id', '=', 'attendance.member_id')
+            ->orderBy('attendance.id', 'desc') // Order by the creation date in descending order
             ->groupBy('events.title', 'attendance.present')
             ->get(['events.title', Attendance::raw('GROUP_CONCAT(CONCAT(members.member_name, " - ", IF(attendance.present = 0, "absent", "present")) SEPARATOR "\n") as member_info')]);
+
 
         return view('attendance.view', compact('attendances'));
     }

@@ -27,16 +27,13 @@
             <div class="row">
                 <div class="col-lg-6">
                     <div class="card">
-                        <div class="card-header">
-                            <h3>Events</h3>
-                        </div>
                         <div class="card-body">
                             <form action="{{ route('attendance.store') }}" method="POST">
                                 @csrf
                                 <div class="form-group">
-                                    <label for="event_name">Select Event:</label>
-                                    <select name="event_id" id="event_id" class="form-control mt-8">
-                                        <option value="" disable selected>Select event..</option>
+                                    <strong>Select Event:</strong>
+                                    <select name="event_id" id="event_id" class="form-control">
+                                        <option value="" disabled selected>Select event...</option>
                                         @foreach($events as $event)
                                         @if($event->done == 0)
                                         <option value="{{ $event->id }}">{{ $event->title }}</option>
@@ -60,11 +57,9 @@
                                                 <input type="hidden" name="member_id[]" value="{{ $member->id }}">
                                             </td>
                                             <td>
-                                                <div class="form-check">
-                                                    <input class="form-check-input" type="checkbox" name="present[]" value="{{ $member->id }}" id="flexCheckChecked{{ $member->id }}">
-                                                    <label class="form-check-label" for="flexCheckChecked{{ $member->id }}"></label>
-                                                </div>
-                                            </td>                                            
+                                                <!-- Checkboxes -->
+                                                <input class="form-check-input d-block ms-4" type="checkbox" name="present[]" value="{{ $member->id }}" id="flexCheckChecked{{ $member->id }}">
+                                            </td>
                                         </tr>
                                         @endforeach
                                     </tbody>
@@ -81,6 +76,6 @@
 </div>
 @endsection
 
-@push('index')
+@push('dashboard')
 
 @endpush
