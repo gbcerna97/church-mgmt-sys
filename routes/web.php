@@ -46,29 +46,18 @@ Route::middleware('auth:sanctum')->group(function () {
 		return view('dashboard');
 	})->name('user.login');
 
-    // Givers resource routes
-    Route::resource('giver', GiverController::class);
-
-    // Givers resource routes
-    Route::resource('donation', DonationController::class);
-
-    // Finance resource routes
-    Route::resource('accounting', FinanceController::class);
-
     // Disbursement requests resource routes
     Route::resource('request', DisbursementRequestController::class);
 
     // Disbursement resource routes
     Route::resource('disbursement', DisbursementController::class);
-
+ 
     // Cash counts resource routes
     Route::resource('cashcount', CashCountController::class);
-    
+
+    // For staff 1
     // Members resource routes
     Route::resource('member', MemberController::class);
-
-    // Inventory resource routes
-    Route::resource('inventory', InventoryController::class);
 
     // Events resource routes
     Route::resource('events', EventController::class);
@@ -81,7 +70,19 @@ Route::middleware('auth:sanctum')->group(function () {
     Route::get('/attendance/view', [AttendanceController::class, 'viewAttendance'])
         ->name('attendance.view');
 
+    // Inventory resource routes
+    Route::resource('inventory', InventoryController::class);
+    Route::get('/all-inventory', [InventoryController::class, 'viewAll'])->name('inventory.all');
 
+    //For staff 2
+    // Givers resource routes
+    Route::resource('donation', DonationController::class);
+
+    // Finance resource routes
+    Route::resource('accounting', FinanceController::class);
+
+    // Givers resource routes
+    Route::resource('giver', GiverController::class);
 });
 
 Route::group(['middleware' => 'guest'], function () {

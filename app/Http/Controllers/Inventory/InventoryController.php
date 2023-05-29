@@ -4,6 +4,7 @@ namespace App\Http\Controllers\Inventory;
 
 use App\Http\Controllers\Controller;
 use App\Models\Inventory;
+use App\Models\Donation;
 use Illuminate\Http\Request;
 
 class InventoryController extends Controller
@@ -114,5 +115,15 @@ class InventoryController extends Controller
         return redirect()
             ->route('inventory.index')
             ->with('success', 'Product Deleted Successfully');
+    }
+
+    public function viewAll()
+    {
+        $donation = Donation::latest()->paginate(10);
+        $inventory = Inventory::latest()->paginate(10);
+        return view('inventory.all', compact('inventory', 'donation'))->with(
+            'i',
+            (request()->input('page', 1) - 1) * 5
+        );
     }
 }

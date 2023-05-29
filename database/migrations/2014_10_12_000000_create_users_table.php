@@ -19,7 +19,8 @@ return new class extends Migration
             $table->string('password');
             $table->boolean('confirmed')->nullable()->default(false);
             $table->boolean('is_admin')->nullable()->default(false);
-            $table->boolean('is_staff')->nullable()->default(false);
+            $table->boolean('is_staff1')->nullable()->default(false);
+            $table->boolean('is_staff2')->nullable()->default(false);
             $table->rememberToken();
             $table->timestamps();
         });

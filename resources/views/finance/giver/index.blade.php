@@ -8,7 +8,6 @@
                 <h2 class="mb-0">{{ __('Giver Management') }}</h2>
                 <div class="pull-left">
                     <a class="btn btn-success" href="{{ route('giver.create') }}" data-bs-toggle="tooltip" data-bs-placement="top" title="Add New Giver Record">Add New</a>
-                    <a class="btn btn-info" href="{{ route('cashcount.create') }}" data-bs-toggle="tooltip" data-bs-placement="top" title="Cash Count For Specific Date">Add Cash Count</a>
                 </div>
             </div>
             <div class="card-body pt-4 p-3">

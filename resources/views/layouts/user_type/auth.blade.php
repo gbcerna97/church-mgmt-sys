@@ -21,8 +21,26 @@
                 @yield('content')
             </div>
 
-        @else
+        @elseif (Auth::user()->is_admin)
             @include('layouts.navbars.auth.sidebar')
+            <main class="main-content position-relative max-height-vh-100 h-100 mt-1 border-radius-lg">
+                @include('layouts.navbars.auth.nav')
+                <div class="container-fluid py-4">
+                    @yield('content')
+                    @include('layouts.footers.auth.footer')
+                </div>
+            </main>
+        @elseif (Auth::user()->is_staff1)
+            @include('layouts.navbars.staff_1.sidebar')
+            <main class="main-content position-relative max-height-vh-100 h-100 mt-1 border-radius-lg">
+                @include('layouts.navbars.auth.nav')
+                <div class="container-fluid py-4">
+                    @yield('content')
+                    @include('layouts.footers.auth.footer')
+                </div>
+            </main>
+        @elseif (Auth::user()->is_staff2)
+            @include('layouts.navbars.staff_2.sidebar')
             <main class="main-content position-relative max-height-vh-100 h-100 mt-1 border-radius-lg">
                 @include('layouts.navbars.auth.nav')
                 <div class="container-fluid py-4">

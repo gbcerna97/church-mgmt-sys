@@ -7,6 +7,7 @@ use Illuminate\Http\Request;
 use App\Models\Giver;
 use App\Models\Fund;
 use App\Models\ChurchInfo;
+use App\Models\CashCount;
 use DataTables;
 use Illuminate\Support\Facades\DB;
 
@@ -56,6 +57,19 @@ class GiverController extends Controller
         $giver->sanctuary = $request->sanctuary;
         $giver->love_gift = $request->love_gift;
         $giver->dance_ministry = $request->dance_ministry;
+        $giver->cc_1000 += $request->cc_1000;
+        $giver->cc_500 += $request->cc_500;
+        $giver->cc_200 += $request->cc_200;
+        $giver->cc_100 += $request->cc_100;
+        $giver->cc_50 += $request->cc_50;
+        $giver->cc_20 += $request->cc_20;
+        $giver->cc_10 += $request->cc_10;
+        $giver->cc_5 += $request->cc_5;
+        $giver->cc_1 += $request->cc_1;
+        $giver->cc_0_25 += $request->cc_0_25;
+        $giver->cc_0_1 += $request->cc_0_1;
+        $giver->cc_0_05 += $request->cc_0_05;
+        $giver->cc_0_01 += $request->cc_0_01;
         $giver->total = $total;
         $giver->save();
 
@@ -76,6 +90,44 @@ class GiverController extends Controller
             Fund::create([
                 'date' => $request->date,
                 'fund' => $total,
+            ]);
+        }
+
+        $existingCashCount = CashCount::where('date', $request->date)->first();
+
+        if ($existingCashCount) {
+            // Update the existing cash count
+            $existingCashCount->cc_1000 += $request->cc_1000;
+            $existingCashCount->cc_500 += $request->cc_500;
+            $existingCashCount->cc_200 += $request->cc_200;
+            $existingCashCount->cc_100 += $request->cc_100;
+            $existingCashCount->cc_50 += $request->cc_50;
+            $existingCashCount->cc_20 += $request->cc_20;
+            $existingCashCount->cc_10 += $request->cc_10;
+            $existingCashCount->cc_5 += $request->cc_5;
+            $existingCashCount->cc_1 += $request->cc_1;
+            $existingCashCount->cc_0_25 += $request->cc_0_25;
+            $existingCashCount->cc_0_1 += $request->cc_0_1;
+            $existingCashCount->cc_0_05 += $request->cc_0_05;
+            $existingCashCount->cc_0_01 += $request->cc_0_01;
+            $existingCashCount->save();
+        } else {
+            CashCount::create([
+                // Create a new cash count record
+                'cc_1000' => $request->cc_1000,
+                'cc_500' => $request->cc_500,
+                'cc_200' => $request->cc_200,
+                'cc_100' => $request->cc_100,
+                'cc_50' => $request->cc_50,
+                'cc_20' => $request->cc_20,
+                'cc_10' => $request->cc_10,
+                'cc_5' => $request->cc_5,
+                'cc_1' => $request->cc_1,
+                'cc_0_25' => $request->cc_0_25,
+                'cc_0_1' => $request->cc_0_1,
+                'cc_0_05' => $request->cc_0_05,
+                'cc_0_01' => $request->cc_0_01,
+                'date' => $request->date,
             ]);
         }
 
@@ -108,6 +160,39 @@ class GiverController extends Controller
             'date' => 'required',   
         ]);
 
+        $existingCashCount = CashCount::where('date', $request->date)->first();
+
+        if ($existingCashCount) {
+            // Update the existing cash count
+            $existingCashCount->cc_1000 -= $giver->cc_1000;
+            $existingCashCount->cc_500 -= $giver->cc_500;
+            $existingCashCount->cc_200 -= $giver->cc_200;
+            $existingCashCount->cc_100 -= $giver->cc_100;
+            $existingCashCount->cc_50 -= $giver->cc_50;
+            $existingCashCount->cc_20 -= $giver->cc_20;
+            $existingCashCount->cc_10 -= $giver->cc_10;
+            $existingCashCount->cc_5 -= $giver->cc_5;
+            $existingCashCount->cc_1 -= $giver->cc_1;
+            $existingCashCount->cc_0_25 -= $giver->cc_0_25;
+            $existingCashCount->cc_0_1 -= $giver->cc_0_1;
+            $existingCashCount->cc_0_05 -= $giver->cc_0_05;
+            $existingCashCount->cc_0_01 -= $giver->cc_0_01;
+            $existingCashCount->cc_1000 += $request->cc_1000;
+            $existingCashCount->cc_500 += $request->cc_500;
+            $existingCashCount->cc_200 += $request->cc_200;
+            $existingCashCount->cc_100 += $request->cc_100;
+            $existingCashCount->cc_50 += $request->cc_50;
+            $existingCashCount->cc_20 += $request->cc_20;
+            $existingCashCount->cc_10 += $request->cc_10;
+            $existingCashCount->cc_5 += $request->cc_5;
+            $existingCashCount->cc_1 += $request->cc_1;
+            $existingCashCount->cc_0_25 += $request->cc_0_25;
+            $existingCashCount->cc_0_1 += $request->cc_0_1;
+            $existingCashCount->cc_0_05 += $request->cc_0_05;
+            $existingCashCount->cc_0_01 += $request->cc_0_01;
+            $existingCashCount->save();
+        }
+
         // Aggregate the fields
         $newTotal = $request->tithe + $request->offering + $request->mission + $request->sanctuary + $request->love_gift + $request->dance_ministry;
 
@@ -121,6 +206,19 @@ class GiverController extends Controller
         $giver->sanctuary = $request->sanctuary;
         $giver->love_gift = $request->love_gift;
         $giver->dance_ministry = $request->dance_ministry;
+        $giver->cc_1000 = $request->cc_1000;
+        $giver->cc_500 = $request->cc_500;
+        $giver->cc_200 = $request->cc_200;
+        $giver->cc_100 = $request->cc_100;
+        $giver->cc_50 = $request->cc_50;
+        $giver->cc_20 = $request->cc_20;
+        $giver->cc_10 = $request->cc_10;
+        $giver->cc_5 = $request->cc_5;
+        $giver->cc_1 = $request->cc_1;
+        $giver->cc_0_25 = $request->cc_0_25;
+        $giver->cc_0_1 = $request->cc_0_1;
+        $giver->cc_0_05 = $request->cc_0_05;
+        $giver->cc_0_01 = $request->cc_0_01;
         $giver->total = $newTotal;
         $giver->update();
 

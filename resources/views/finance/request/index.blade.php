@@ -34,7 +34,7 @@
                             <td>{{ $disbursementRequests->firstItem() + $key }}</td>
                             <td>
                                 @if ($disbursementRequest->request_date)
-                                    {{ date('F d, Y', strtotime($disbursementRequest->request_date)) }}</td>
+                                    {{ date('F d, Y', strtotime($disbursementRequest->request_date)) }}
                                 @endif
                             </td>
                             <td>{{ $disbursementRequest->prepared_by }}</td>
