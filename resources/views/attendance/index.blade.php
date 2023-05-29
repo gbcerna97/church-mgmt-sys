@@ -27,9 +27,6 @@
             <div class="row">
                 <div class="col-lg-6">
                     <div class="card">
-                        <div class="card-header">
-                            <h3>Events</h3>
-                        </div>
                         <div class="card-body">
                             <form action="{{ route('attendance.store') }}" method="POST">
                                 @csrf
@@ -58,8 +55,9 @@
                                                 {{ $member->member_name }}
                                                 <input type="hidden" name="member_id[]" value="{{ $member->id }}">
                                             </td>
-                                            <td >
-                                                <input class="form-check-input" type="checkbox" name="present[]" value="{{ $member->id }}" id="flexCheckChecked{{ $member->id }}" >
+                                            <td>
+                                                <!-- Checkboxes -->
+                                                <input class="form-check-input d-block ms-4" type="checkbox" name="present[]" value="{{ $member->id }}" id="flexCheckChecked{{ $member->id }}">
                                             </td>
                                         </tr>
                                         @endforeach
