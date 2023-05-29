@@ -1,81 +1,33 @@
 <?php
 
-namespace App\Http\Controllers\Finance;
+use Illuminate\Database\Migrations\Migration;
+use Illuminate\Database\Schema\Blueprint;
+use Illuminate\Support\Facades\Schema;
 
-use App\Http\Controllers\Controller;
-use Illuminate\Http\Request;
-use App\Models\DisbursementRequest;
-
-class DisbursementRequestController extends Controller
+return new class extends Migration
 {
     /**
-     * Display a listing of the resource.
+     * Run the migrations.
      */
-    public function index(Request $request)
+    public function up(): void
     {
-        $disbursementRequests = DisbursementRequest::paginate(5);
-        return view('finance.request.index', compact('disbursementRequests'));
+        Schema::create('disbursement_requests', function (Blueprint $table) {
+            $table->id();
+            $table->date('request_date');
+            $table->string('prepared_by')->nullable();
+            $table->string('verified_by')->nullable();
+            $table->string('released_by')->nullable();
+            $table->date('approved_date')->nullable();
+            $table->string('approved_by')->nullable();
+            $table->timestamps();
+        });
     }
 
     /**
-     * Show the form for creating a new resource.
+     * Reverse the migrations.
      */
-    public function create()
+    public function down(): void
     {
-        return view('finance.request.create');
+        Schema::dropIfExists('disbursement_requests');
     }
-
-    /**
-     * Store a newly created resource in storage.
-     */
-    public function store(Request $request)
-    {
-        $request->validate([
-            'request_date' => 'required',
-        ]);
-
-        DisbursementRequest::create($request->all());
-
-        return redirect()->route('request.index')->with('success', 'Record Added Successfully.');
-    }
-
-    /**
-     * Display the specified resource.
-     */
-    public function show(DisbursementRequest $disbursementRequest)
-    {
-        return view('finance.request.show', compact('disbursementRequest'));
-    }
-
-    /**
-     * Show the form for editing the specified resource.
-     */
-    public function edit(DisbursementRequest $disbursementRequest)
-    {
-        return view('finance.request.edit', compact('disbursementRequest'));
-    }
-
-    /**
-     * Update the specified resource in storage.
-     */
-    public function update(Request $request, DisbursementRequest $disbursementRequest)
-    {
-        $request->validate([
-            'request_date' => 'required',
-        ]);
-
-        $disbursementRequest->update($request->all());
-
-        return redirect()->route('request.index')->with('success', 'Record Updated Successfully.');
-    }
-
-    /**
-     * Remove the specified resource from storage.
-     */
-    public function destroy(DisbursementRequest $disbursementRequest)
-    {
-        $disbursementRequest->delete();
-
-        return redirect()->route('request.index')->with('success', 'Record Deleted Successfully.');
-    }
-}
+};
