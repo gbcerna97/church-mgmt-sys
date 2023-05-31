@@ -10,6 +10,7 @@ use App\Models\ChurchInfo;
 use App\Models\CashCount;
 use DataTables;
 use Illuminate\Support\Facades\DB;
+use Illuminate\Support\Facades\Schema;
 
 class GiverController extends Controller
 {
@@ -19,8 +20,8 @@ class GiverController extends Controller
     public function index(Request $request)
     {
         $givers = Giver::latest()
-            ->groupBy('givers.date', 'givers.id', 'givers.giver_name', 'givers.tithe', 'givers.offering', 'givers.mission', 'givers.sanctuary', 'givers.love_gift', 'givers.dance_ministry')
-            ->paginate(10);
+        ->groupBy(DB::raw(implode(',', Schema::getColumnListing('givers'))))
+        ->paginate(10);
 
 
         return view('finance.giver.index', compact('givers'))->with('i', (request()->input('page', 1) - 1) * 5);
@@ -47,6 +48,7 @@ class GiverController extends Controller
 
         // Aggregate the fields
         $total = $request->tithe + $request->offering + $request->mission + $request->sanctuary + $request->love_gift + $request->dance_ministry;
+        $others =$request->mission + $request->sanctuary + $request->love_gift + $request->dance_ministry;
 
         $giver = new Giver;
         $giver->giver_name = $request->giver_name;
@@ -84,12 +86,18 @@ class GiverController extends Controller
         if ($existingFund) {
             // Update the existing fund total
             $existingFund->fund += $total;
+            $existingFund->tithe += $request->tithe;
+            $existingFund->offering += $request->offering;
+            $existingFund->others += $others;
             $existingFund->save();
         } else {
             // Create a new fund record
             Fund::create([
                 'date' => $request->date,
                 'fund' => $total,
+                'tithe' => $request->tithe,
+                'offering' => $request->offering,
+                'others' => $others,
             ]);
         }
 
@@ -198,6 +206,14 @@ class GiverController extends Controller
 
         $oldTotal = $giver->total;
 
+        $newOthers = $request->mission + $request->sanctuary + $request->love_gift + $request->dance_ministry;
+
+        $oldOthers = $giver->mission + $giver->sanctuary + $giver->love_gift + $giver->dance_ministry;
+
+        $oldTithe = $giver->tithe;
+
+        $oldOffering = $giver->offering;
+
         $giver->giver_name = $request->giver_name;
         $giver->date = $request->date;
         $giver->tithe = $request->tithe;
@@ -235,7 +251,13 @@ class GiverController extends Controller
         if ($existingFund) {
             // Deduct the old total and add the new total to the fund balance
             $existingFund->fund -= $oldTotal;
+            $existingFund->tithe -= $oldTithe;
+            $existingFund->offering = $oldOffering;
+            $existingFund->others -= $oldOthers;
             $existingFund->fund += $newTotal;
+            $existingFund->tithe += $request->tithe;
+            $existingFund->offering += $request->offering;
+            $existingFund->others += $newOthers;
             $existingFund->save();
         }
 

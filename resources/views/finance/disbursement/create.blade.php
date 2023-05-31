@@ -35,7 +35,7 @@
                         <div class="row">
                             <div class="col-xs-12 col-sm-12 col-md-12 mb-3">
                                 <div class="form-group">
-                                    <strong>Request date:</strong>
+                                    <strong>Request ID:</strong>
                                     <select name="request_id" id="request_id" class="form-control">
                                         <option value="" disabled selected>Select request id...</option>
                                         @foreach ($disbursementRequests as $disbursementRequest)
@@ -48,6 +48,22 @@
                                 <div class="form-group">
                                     <strong>Account name:</strong>
                                     <input type="text" name="account_name" class="form-control" placeholder="Account name">
+                                </div>
+                            </div>
+                            <div class="col-xs-12 col-sm-12 col-md-12 mb-3">
+                                <div class="form-group">
+                                    <strong>Date:</strong>
+                                    <input type="date" name="date" class="form-control">
+                                </div>
+                            </div>
+                            <div class="col-xs-12 col-sm-12 col-md-12 mb-3">
+                                <div class="form-group">
+                                    <strong>Fund Source:</strong>
+                                    <select name="fund_source" id="fund_source" class="form-control">
+                                        <option value="" disabled selected>Select request id...</option>
+                                        <option value="Funded">Funded</option>
+                                        <option value="GF">GF</option>
+                                    </select>
                                 </div>
                             </div>
                             <div class="col-xs-12 col-sm-12 col-md-12 mb-3">

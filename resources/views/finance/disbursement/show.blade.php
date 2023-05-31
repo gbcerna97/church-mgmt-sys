@@ -12,34 +12,48 @@
             </div>
             <div class="card-body pt-4 p-3">
                 <div>
-                    <div class="row">
-                        <div class="col-xs-12 col-sm-12 col-md-12 mb-2">
-                            <div class="form-group">
-                                <strong>Request ID:</strong>
-                                <input type="text" class="form-control" value="{{ $disbursement->request_id }}" readonly>
-                            </div>
-                        </div>
-                        <div class="col-xs-12 col-sm-12 col-md-12 mb-2">
-                            <div class="form-group">
-                                <strong>Account name:</strong>
-                                <input type="text" class="form-control" value="{{ $disbursement->released_to}}" readonly>
-                            </div>
-                        </div>
-                        <div class="col-xs-12 col-sm-12 col-md-12 mb-2">
-                            <div class="form-group">
-                                <strong>Particulars:</strong>
-                                <input type="text" class="form-control" value="{{ $disbursement->particulars }}" readonly>
-                            </div>
-                        </div>
-                        <div class="col-xs-12 col-sm-12 col-md-12 mb-2">
-                            <div class="form-group">
-                                <strong>Unit price:</strong>
-                                @if ($disbursement->unit_price)
-                                    <input type="text" class="form-control" value="Php {{ $disbursement->unit_price }}" readonly>
-                                @endif
-                            </div>
-                        </div>            
-                    </div>
+
+                    <table class="table table-bordered">
+                        <tr>
+                            <td colspan="8" class="text-center">Jesus Loves You City Church - Butuan City <br>CASH VOUCHER</td>
+                        <tr>
+                            <td colspan="6">Paid to: <b>{{ $disbursement->released_to}}<b></td>
+                            <td colspan="2">CV No.: <b>{{ $disbursement->voucher_number }}</b></td>
+                        </tr>
+                        <tr>
+                            <td colspan="6">Amount: <b>{{ $disbursement->unit_price}}<b></td>
+                            <td colspan="2">Date: <b>{{ $disbursement->date }}</b></td>
+                        </tr>
+                        <tr>
+                            <td colspan="4">Account Code</td>
+                            <td>Account Titles</td>
+                            <td>Fund Source</td>
+                            <td>Debit</td>
+                            <td>Credit</td>
+                        </tr>
+                        <tr>
+                            <td rowspan="2" colspan="5"><b>{{ $disbursement->particulars }}</b></td>
+                            <td rowspan="2" ><b>{{ $disbursement->fund_source }}</b></td>
+                            <td rowspan="2" ></td>
+                            <td rowspan="2" ></td>
+                        </tr>
+                        <tr>
+                            
+                        </tr>
+                        <tr>
+                            <td colspan="6" class="text-right">TOTAL</td>
+                            <td colspan="2"><b>{{ $disbursement->unit_price }}</b></td>
+                        </tr>
+                        <tr>
+                            <td></td>
+                            <td></td>
+                            <td></td>
+                            <td></td>
+                            <td></td>
+                            <td></td>
+                            <td></td>
+                        </tr>
+                    </table>
                 </div>        
             </div>
         </div>

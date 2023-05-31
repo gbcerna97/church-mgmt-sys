@@ -11,7 +11,7 @@ use App\Http\Controllers\InfoUserController;
 use App\Http\Controllers\RegisterController;
 use App\Http\Controllers\ResetController;
 use App\Http\Controllers\SessionsController;
-
+use App\Http\Controllers\Finance\DisbursementRequestController;
 /*
 |--------------------------------------------------------------------------
 | API Routes
@@ -26,3 +26,7 @@ use App\Http\Controllers\SessionsController;
 Route::middleware('auth:sanctum')->get('/user', function (Request $request) {
     return $request->user();
 });
+
+
+// Disbursement requests resource routes
+Route::resource('request', DisbursementRequestController::class);

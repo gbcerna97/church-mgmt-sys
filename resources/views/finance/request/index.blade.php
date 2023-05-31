@@ -29,26 +29,26 @@
                             <th>Approved Date</th>
                             <th width="280px">Action</th>
                         </tr>
-                        @foreach ($disbursementRequests as $key => $disbursementRequest)
+                        @foreach ($disbursement_requests as $disbursement_request)
                         <tr>
-                            <td>{{ $disbursementRequests->firstItem() + $key }}</td>
+                            <td>{{ ++$i }}</td>
                             <td>
-                                @if ($disbursementRequest->request_date)
-                                    {{ date('F d, Y', strtotime($disbursementRequest->request_date)) }}
+                                @if ($disbursement_request->request_date)
+                                    {{ date('F d, Y', strtotime($disbursement_request->request_date)) }}
                                 @endif
                             </td>
-                            <td>{{ $disbursementRequest->prepared_by }}</td>
-                            <td>@if ($disbursementRequest->verified_by) Php {{ $disbursementRequest->verified_by }} @endif</td>
-                            <td>@if ($disbursementRequest->released_by) Php {{ $disbursementRequest->released_by }} @endif</td>
-                            <td>@if ($disbursementRequest->approved_by) Php {{ $disbursementRequest->approved_by }} @endif</td>
+                            <td>{{ $disbursement_request->prepared_by }}</td>
+                            <td>@if ($disbursement_request->verified_by) Php {{ $disbursement_request->verified_by }} @endif</td>
+                            <td>@if ($disbursement_request->released_by) Php {{ $disbursement_request->released_by }} @endif</td>
+                            <td>@if ($disbursement_request->approved_by) Php {{ $disbursement_request->approved_by }} @endif</td>
                             <td>
-                                @if ($disbursementRequest->approved_date)
-                                    {{ date('F d, Y', strtotime($disbursementRequest->approved_date)) }}</td>
+                                @if ($disbursement_request->approved_date)
+                                    {{ date('F d, Y', strtotime($disbursement_request->approved_date)) }}</td>
                                 @endif
                             <td>
-                                <form action="{{ route('request.destroy', $disbursementRequest->id) }}" method="POST">
-                                    <a class="btn btn-info" href="{{ route('request.show', $disbursementRequest->id) }}" data-bs-toggle="tooltip" data-bs-placement="top" title="View"><i class="fa fa-eye"></i></a>
-                                    <a class="btn btn-primary" href="{{ route('request.edit', $disbursementRequest->id) }}" data-bs-toggle="tooltip" data-bs-placement="top" title="Edit"><i class="fa fa-edit"></i></a>
+                                <form action="{{ route('request.destroy', $disbursement_request->id) }}" method="POST">
+                                    <a class="btn btn-info" href="{{ route('request.show', $disbursement_request->id) }}" data-bs-toggle="tooltip" data-bs-placement="top" title="View"><i class="fa fa-eye"></i></a>
+                                    <a class="btn btn-primary" href="{{ route('request.edit', $disbursement_request->id) }}" data-bs-toggle="tooltip" data-bs-placement="top" title="Edit"><i class="fa fa-edit"></i></a>
                                     @csrf
                                     @method('DELETE')
                                     <button type="submit" class="btn btn-danger" data-bs-toggle="tooltip" data-bs-placement="top" title="Delete"><i class="fa fa-trash-o"></i></button>
@@ -57,7 +57,7 @@
                         </tr>
                         @endforeach
                     </table>
-                    {{ $disbursementRequests->links() }}
+                    {{ $disbursement_requests->links() }}
                 </div>        
             </div>
         </div>

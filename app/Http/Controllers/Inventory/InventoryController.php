@@ -48,10 +48,11 @@ class InventoryController extends Controller
 
         $inventory = new Inventory;
         $inventory->inventName = $request->inventName;
-        $inventory->inventName = $request->inventName;
+        $inventory->ministryName = $request->ministryName;
         $inventory->category = $request->category;
         $inventory->date_purchased = $request->date_purchased;
         $inventory->item_num = $request->item_num;
+        $inventory->unit_cost = $request->unit_cost;
         $inventory->total_cost = $total_cost;
         $inventory->save();
 
@@ -93,10 +94,11 @@ class InventoryController extends Controller
         $total_cost = $request->item_num * $request->unit_cost;
 
         $inventory->inventName = $request->inventName;
-        $inventory->inventName = $request->inventName;
+        $inventory->ministryName = $request->ministryName;
         $inventory->category = $request->category;
         $inventory->date_purchased = $request->date_purchased;
         $inventory->item_num = $request->item_num;
+        $inventory->unit_cost = $request->unit_cost;
         $inventory->total_cost = $total_cost;
         $inventory->update();
 
@@ -119,11 +121,11 @@ class InventoryController extends Controller
 
     public function viewAll()
     {
-        $donation = Donation::latest()->paginate(10);
+        $donation = Donation::where('donation_type', 'Non-monetary')
+            ->latest()
+            ->paginate(10);
         $inventory = Inventory::latest()->paginate(10);
-        return view('inventory.all', compact('inventory', 'donation'))->with(
-            'i',
-            (request()->input('page', 1) - 1) * 5
+        return view('inventory.all', compact('inventory', 'donation'))->with('i', (request()->input('page', 1) - 1) * 5
         );
     }
 }

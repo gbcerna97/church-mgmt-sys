@@ -26,6 +26,8 @@ class Disbursement extends Model
     protected $fillable = [
         'request_id',
         'account_name',
+        'date',
+        'fund_source',
         'released_to',
         'particulars',
         'unit_price',

@@ -5,6 +5,9 @@ namespace App\Http\Controllers\Finance;
 use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
 use App\Models\DisbursementRequest;
+use App\Models\Disbursement;
+use Illuminate\Support\Facades\DB;
+use Illuminate\Support\Facades\Schema;
 
 class DisbursementRequestController extends Controller
 {
@@ -13,8 +16,11 @@ class DisbursementRequestController extends Controller
      */
     public function index(Request $request)
     {
-        $disbursementRequests = DisbursementRequest::paginate(5);
-        return view('finance.request.index', compact('disbursementRequests'))->with('i', (request()->input('page', 1) - 1) * 5);
+        
+        $disbursement_requests = DisbursementRequest::latest()
+            ->groupBy(DB::raw(implode(',', Schema::getColumnListing('disbursement_requests'))))
+            ->paginate(10);
+        return view('finance.request.index', compact('disbursement_requests'))->with('i', (request()->input('page', 1) - 1) * 5);
     }
 
     /**
@@ -42,30 +48,36 @@ class DisbursementRequestController extends Controller
     /**
      * Display the specified resource.
      */
-    public function show(DisbursementRequest $disbursementRequest)
+    public function show(string $id)
     {
-
-        return view('finance.request.show', compact('disbursementRequest'));
+        $disbursement_request = DisbursementRequest::findorFail($id);
+        $disbursements = Disbursement::where('request_id', $disbursement_request->id)->first()
+            ->groupBy(DB::raw(implode(',', Schema::getColumnListing('disbursements'))))
+            ->paginate(10);
+    
+        return view('finance.request.show',compact('disbursement_request', 'disbursements'))->with('i', (request()->input('page', 1) - 1) * 5);
     }
 
     /**
      * Show the form for editing the specified resource.
      */
-    public function edit(DisbursementRequest $disbursementRequest)
+    public function edit(string $id)
     {
-        return view('finance.request.edit', compact('disbursementRequest'));
+        $disbursement_request = DisbursementRequest::findorFail($id);
+        
+        return view('finance.request.edit', compact('disbursement_request'));
     }
 
     /**
      * Update the specified resource in storage.
      */
-    public function update(Request $request, DisbursementRequest $disbursementRequest)
+    public function update(Request $request, DisbursementRequest $disbursement_request)
     {
         $request->validate([
             'request_date' => 'required',
         ]);
 
-        $disbursementRequest->update($request->all());
+        $disbursement_request->update($request->all());
 
         return redirect()->route('request.index')->with('success', 'Record Updated Successfully.');
     }
@@ -73,10 +85,21 @@ class DisbursementRequestController extends Controller
     /**
      * Remove the specified resource from storage.
      */
-    public function destroy(DisbursementRequest $disbursementRequest)
+    public function destroy(string $id)
     {
-        $disbursementRequest->delete();
+        $disbursement_request = DisbursementRequest::findorFail($id);
+        $disbursement_request->delete();
 
         return redirect()->route('request.index')->with('success', 'Record Deleted Successfully.');
+    }
+
+    public function viewAll()
+    {
+        $donation = Donation::latest()->paginate(10);
+        $inventory = Inventory::latest()->paginate(10);
+        return view('inventory.all', compact('inventory', 'donation'))->with(
+            'i',
+            (request()->input('page', 1) - 1) * 5
+        );
     }
 }

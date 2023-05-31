@@ -21,22 +21,18 @@
                     <table class="table table-bordered">
                         <tr>
                             <th>No</th>
-                            <th>Product</th>
+                            <th>Name</th>
                             <th>Category</th>
-                            <th>Date Purchased</th>
-                            <th>Number of Units</th>
-                            <th>Unit Cost</th>
-                            <th>Total Cost</th>
+                            <th>Date</th>
+                            <th>Amount</th>
                             <th width="280px">Action</th>
                         </tr>
                         @foreach ($inventory as $product)
                         <tr>
                             <td>{{ ++$i }}</td>
                             <td>{{ $product->inventName }}</td>
-                            <td>{{ $product->category }}</td>
+                            <td>Purchased</td>
                             <td>{{ date('F d, Y', strtotime($product->date_purchased)) }}</td>
-                            <td>{{$product->item_num}}</td>
-                            <td>Php {{$product->unit_cost}}</td>
                             <td>Php {{$product->total_cost}}</td>
                             <td>
                                 <form action="{{ route('inventory.destroy',$product->id) }}" method="POST">
@@ -44,6 +40,28 @@
                                     <a class="btn btn-info" href="{{ route('inventory.show',$product->id) }}" data-bs-toggle="tooltip" data-bs-placement="top" title="View"><i class="fa fa-eye"></i></a>
                     
                                     <a class="btn btn-primary" href="{{ route('inventory.edit',$product->id) }}" data-bs-toggle="tooltip" data-bs-placement="top" title="Edit"><i class="fa fa-edit"></i></a>
+                
+                                    @csrf
+                                    @method('DELETE')
+                    
+                                    <button type="submit" class="btn btn-danger" data-bs-toggle="tooltip" data-bs-placement="top" title="Delete"><i class="fa fa-trash-o"></i></button>
+                                </form>
+                            </td>
+                        </tr>
+                        @endforeach
+                        @foreach ($donation as $donation)
+                        <tr>
+                            <td>{{ ++$i }}</td>
+                            <td>{{ $donation->donation_name }}</td>
+                            <td>Donation</td>
+                            <td>{{ date('F d, Y', strtotime($donation->date)) }}</td>
+                            <td>N/A</td>
+                            <td>
+                                <form action="{{ route('donation.destroy',$donation->id) }}" method="POST">
+                
+                                    <a class="btn btn-info" href="{{ route('donation.show',$donation->id) }}" data-bs-toggle="tooltip" data-bs-placement="top" title="View"><i class="fa fa-eye"></i></a>
+                    
+                                    <a class="btn btn-primary" href="{{ route('donation.edit',$donation->id) }}" data-bs-toggle="tooltip" data-bs-placement="top" title="Edit"><i class="fa fa-edit"></i></a>
                 
                                     @csrf
                                     @method('DELETE')

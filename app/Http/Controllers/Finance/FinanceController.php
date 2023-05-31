@@ -77,4 +77,27 @@ class FinanceController extends Controller
 
         return view('finance.accounting.show', compact('givers', 'fund', 'date', 'church', 'cashCount', 'cc_1000_t', 'cc_500_t', 'cc_200_t', 'cc_100_t', 'cc_50_t', 'cc_20_t', 'cc_10_t', 'cc_5_t', 'cc_1_t', 'cc_0_25_t', 'cc_0_1_t', 'cc_0_05_t', 'cc_0_01_t'));
     }
+
+    public function viewMonthList(Request $request)
+    {
+        $months = Giver::pluck('date')
+            ->map(function ($date) {
+                return date('F Y', strtotime($date));
+            })
+            ->unique()
+            ->values();
+
+        return view('finance.accounting.report', ['months' => $months])->with('i', (request()->input('page', 1) - 1) * 5);;
+    }
+
+    public function viewReportDetail($month)
+    {
+        $selectedMonth = $month;
+        $funds = Fund::whereYear('date', '=', date('Y', strtotime($selectedMonth)))
+            ->whereMonth('date', '=', date('m', strtotime($selectedMonth)))
+            ->get();
+
+        return view('finance.accounting.detail', compact('month', 'funds'))->with('i', (request()->input('page', 1) - 1) * 5);
+    }
+
 }
