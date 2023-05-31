@@ -16,8 +16,8 @@ class DisbursementController extends Controller
     public function index(Request $request)
     {
         $disbursements = Disbursement::all();
-        return view('finance.disbursement.index', compact('disbursements'))->with('i', (request()->input('page', 1) - 1) * 5);
 
+        return view('finance.disbursement.index', compact('disbursements'))->with('i', (request()->input('page', 1) - 1) * 5);
     }
 
     /**

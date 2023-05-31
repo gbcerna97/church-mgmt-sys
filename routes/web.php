@@ -35,10 +35,8 @@ use Illuminate\Support\Facades\Route;
 Route::middleware('auth:sanctum', \App\Http\Middleware\RoleMiddleware::class . ':admin')->group(function () {
 
     // Authentication routes
-    Route::get('/', [HomeController::class, 'dashboard']);
-	Route::get('dashboard', function () {
-		return view('dashboard');
-	})->name('dashboard');
+    Route::get('/', [HomeController::class, 'dashboard'])->name('dashboard');
+	Route::get('/dashboard', [HomeController::class, 'dashboard'])->name('dashboard');
     Route::get('/logout', [SessionsController::class, 'destroy']);
 	Route::get('/user-profile', [InfoUserController::class, 'create']);
 	Route::post('/user-profile', [InfoUserController::class, 'store'])->name('user.update');
@@ -89,10 +87,8 @@ Route::middleware('auth:sanctum', \App\Http\Middleware\RoleMiddleware::class . '
 Route::middleware('auth:sanctum', \App\Http\Middleware\RoleMiddleware::class . ':admin,staff1')->group(function () {
 
     // Authentication routes
-    Route::get('/', [HomeController::class, 'dashboard']);
-	Route::get('dashboard', function () {
-		return view('dashboard');
-	})->name('dashboard');
+    Route::get('/', [HomeController::class, 'dashboard'])->name('dashboard');
+	Route::get('/dashboard', [HomeController::class, 'dashboard'])->name('dashboard');
     Route::get('/logout', [SessionsController::class, 'destroy']);
 	Route::get('/user-profile', [InfoUserController::class, 'create']);
 	Route::post('/user-profile', [InfoUserController::class, 'store'])->name('user.update');
@@ -123,10 +119,8 @@ Route::middleware('auth:sanctum', \App\Http\Middleware\RoleMiddleware::class . '
 Route::middleware('auth:sanctum', \App\Http\Middleware\RoleMiddleware::class . ':admin,staff2')->group(function () {
 
     // Authentication routes
-    Route::get('/', [HomeController::class, 'dashboard']);
-	Route::get('dashboard', function () {
-		return view('dashboard');
-	})->name('dashboard');
+    Route::get('/', [HomeController::class, 'dashboard'])->name('dashboard');
+	Route::get('/dashboard', [HomeController::class, 'dashboard'])->name('dashboard');
     Route::get('/logout', [SessionsController::class, 'destroy']);
 	Route::get('/user-profile', [InfoUserController::class, 'create']);
 	Route::post('/user-profile', [InfoUserController::class, 'store'])->name('user.update');
