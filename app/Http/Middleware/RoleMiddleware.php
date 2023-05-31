@@ -4,19 +4,47 @@ namespace App\Http\Middleware;
 
 use Closure;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Auth;
 
 class RoleMiddleware
 {
-    public function handle(Request $request, Closure $next, ...$roles)
+    /**
+     * Handle an incoming request.
+     *
+     * @param  Request  $request
+     * @param  Closure  $next
+     * @param  string  $role
+     * @return mixed
+     */
+    public function handle(Request $request, Closure $next, string $role)
     {
-        $user = $request->user();
+        $user = Auth::user();
 
-        // Check if the user has any of the specified roles
-        if ($user && $user->hasAnyRole($roles)) {
+        if ($user && $this->hasRole($user, $role)) {
             return $next($request);
         }
 
-        // Redirect the user to a specific page if the role check fails
-        return redirect('/unauthorized');
+        abort(403, 'Unauthorized action.');
+    }
+
+    /**
+     * Check if the user has the specified role.
+     *
+     * @param  mixed  $user
+     * @param  string  $role
+     * @return bool
+     */
+    private function hasRole($user, string $role): bool
+    {
+        switch ($role) {
+            case 'admin':
+                return $user->is_admin;
+            case 'staff1':
+                return $user->is_staff1;
+            case 'staff2':
+                return $user->is_staff2;
+            default:
+                return false;
+        }
     }
 }

@@ -31,8 +31,8 @@ use Illuminate\Support\Facades\Route;
 |
 */
 
-
-Route::middleware('auth:sanctum')->group(function () {
+//Admin routes
+Route::middleware('auth:sanctum', \App\Http\Middleware\RoleMiddleware::class . ':admin')->group(function () {
 
     // Authentication routes
     Route::get('/', [HomeController::class, 'dashboard']);
@@ -55,7 +55,6 @@ Route::middleware('auth:sanctum')->group(function () {
     // Cash counts resource routes
     Route::resource('cashcount', CashCountController::class);
 
-    // For staff 1
     // Members resource routes
     Route::resource('member', MemberController::class);
 
@@ -74,7 +73,67 @@ Route::middleware('auth:sanctum')->group(function () {
     Route::resource('inventory', InventoryController::class);
     Route::get('/all-inventory', [InventoryController::class, 'viewAll'])->name('inventory.all');
 
-    //For staff 2
+    // Givers resource routes
+    Route::resource('donation', DonationController::class);
+
+    // Finance resource routes
+    Route::resource('accounting', FinanceController::class);
+    Route::get('/monthly-report', [FinanceController::class, 'viewMonthList'])->name('accounting.report');
+    Route::get('/monthly-report/{month}', [FinanceController::class, 'viewReportDetail'])->name('accounting.detail');
+
+    // Givers resource routes
+    Route::resource('giver', GiverController::class);
+});
+
+//Staff1 routes
+Route::middleware('auth:sanctum', \App\Http\Middleware\RoleMiddleware::class . ':admin,staff1')->group(function () {
+
+    // Authentication routes
+    Route::get('/', [HomeController::class, 'dashboard']);
+	Route::get('dashboard', function () {
+		return view('dashboard');
+	})->name('dashboard');
+    Route::get('/logout', [SessionsController::class, 'destroy']);
+	Route::get('/user-profile', [InfoUserController::class, 'create']);
+	Route::post('/user-profile', [InfoUserController::class, 'store'])->name('user.update');
+    Route::get('/login', function () {
+		return view('dashboard');
+	})->name('user.login');
+
+    // Members resource routes
+    Route::resource('member', MemberController::class);
+
+    // Events resource routes
+    Route::resource('events', EventController::class);
+
+    // Attendance routes
+    Route::get('/attendance', [AttendanceController::class, 'index'])
+        ->name('attendance.index');
+    Route::post('/attendance', [AttendanceController::class, 'store'])
+        ->name('attendance.store');
+    Route::get('/attendance/view', [AttendanceController::class, 'viewAttendance'])
+        ->name('attendance.view');
+
+    // Inventory resource routes
+    Route::resource('inventory', InventoryController::class);
+    Route::get('/all-inventory', [InventoryController::class, 'viewAll'])->name('inventory.all');
+});
+
+//Satff2 routes
+Route::middleware('auth:sanctum', \App\Http\Middleware\RoleMiddleware::class . ':admin,staff2')->group(function () {
+
+    // Authentication routes
+    Route::get('/', [HomeController::class, 'dashboard']);
+	Route::get('dashboard', function () {
+		return view('dashboard');
+	})->name('dashboard');
+    Route::get('/logout', [SessionsController::class, 'destroy']);
+	Route::get('/user-profile', [InfoUserController::class, 'create']);
+	Route::post('/user-profile', [InfoUserController::class, 'store'])->name('user.update');
+    Route::get('/login', function () {
+		return view('dashboard');
+	})->name('user.login');
+
     // Givers resource routes
     Route::resource('donation', DonationController::class);
 

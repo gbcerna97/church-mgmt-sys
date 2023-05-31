@@ -5,10 +5,7 @@
     <div class="container-fluid py-4">
         <div class="card">
             <div class="card-header pb-0 px-3">
-                <h2 class="mb-0">{{ __('Account Classification Management') }}</h2>
-                <div class="pull-left">
-                    <a class="btn btn-success" href="{{ route('accounting.report') }}" data-bs-toggle="tooltip" data-bs-placement="top" title="View General Balance">View Monthly Report</a>
-                </div>
+                <h2 class="mb-0">{{ __('Monthly Reports') }}</h2>
             </div>
             <div class="card-body pt-4 p-3">
                 <div>
@@ -21,21 +18,15 @@
                     <table class="table table-bordered">
                         <tr>
                             <th>No</th>
-                            <th>Date</th>
-                            <th>Total</th>
+                            <th>Month</th>
                             <th width="280px">Action</th>
                         </tr>
-                        @foreach ($dates as $date)
+                        @foreach ($months as $month)
                         <tr>
                             <td>{{ ++$i }}</td>
-                            <td>{{ date('F d, Y', strtotime($date)) }}</td>
+                            <td>{{ $month }}</td>
                             <td>
-                                @if (isset($funds[$date]))
-                                    Php {{ $funds[$date]->fund }}
-                                @endif
-                            </td>
-                            <td>
-                                <a class="btn btn-info" href="{{ route('accounting.show', $date) }}" data-bs-toggle="tooltip" data-bs-placement="top" title="View"><i class="fa fa-eye"></i></a>
+                                <a class="btn btn-info" href="{{ route('accounting.detail', ['month' => $month]) }}" data-bs-toggle="tooltip" data-bs-placement="top" title="View"><i class="fa fa-eye"></i></a>
                             </td>
                         </tr>
                         @endforeach

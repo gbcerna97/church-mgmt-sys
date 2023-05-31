@@ -39,14 +39,32 @@ class DisbursementController extends Controller
         $request->validate([
             'request_id' => 'required',
         ]);
-        
+
+        $year = date('Y');
+        $lastDisbursement = Disbursement::where('voucher_number', 'like', 'CV#' . $year . '-%')
+            ->orderBy('voucher_number', 'desc')
+            ->first();
+
+        $incrementNumber = 1;
+        if ($lastDisbursement) {
+            $lastCVNumber = $lastDisbursement->voucher_number;
+            $lastIncrementNumber = intval(substr($lastCVNumber, -5));
+            $incrementNumber = $lastIncrementNumber + 1;
+        }
+
+        $cvNumber = 'CV#' . $year . '-' . str_pad($incrementNumber, 5, '0', STR_PAD_LEFT);
+
         $church = ChurchInfo::first();
-        $church->overall_funds -= $request->unit_price;
+        if ($request->fund_source === 'GF') {
+            $church->overall_funds -= $request->unit_price;
+        }
         $church->save();
 
-        Disbursement::create($request->all());
+        $disbursement = new Disbursement($request->all());
+        $disbursement->voucher_number = $cvNumber;
+        $disbursement->save();
 
-        return redirect()->route('disbursement.index')->with('success','Record Added Successfully.');
+        return redirect()->route('disbursement.index')->with('success', 'Record Added Successfully.');
     }
 
     /**
@@ -81,8 +99,10 @@ class DisbursementController extends Controller
         $newUnitPrice = $request->unit_price;
 
         $church = ChurchInfo::first();
-        $church->overall_funds += $oldUnitPrice;
-        $church->overall_funds -= $newUnitPrice;
+        if ($request->fund_source === 'GF') {
+            $church->overall_funds += $oldUnitPrice;
+            $church->overall_funds -= $newUnitPrice;
+        }
         $church->save();
 
         $disbursement->update($request->all());
@@ -98,7 +118,9 @@ class DisbursementController extends Controller
     public function destroy(Disbursement $disbursement)
     {
         $church = ChurchInfo::first();
-        $church->overall_funds += $disbursement->unit_price;
+        if ($disbursement->fund_source === 'GF') {
+            $church->overall_funds += $disbursement->unit_price;
+        }
 
         $disbursement->delete();
 

@@ -12,39 +12,36 @@
             </div>
             <div class="card-body pt-4 p-3">
                 <div>
-                    <div class="row">
-                        <div class="col-xs-12 col-sm-12 col-md-12 mb-2">
-                            <div class="form-group">
-                                <strong>Request ID:</strong>
-                                <input type="text" class="form-control" value="@if ($disbursementRequest->request_date){{ date('F d, Y', strtotime($disbursementRequest->request_date))}}@endif" readonly>
-                            </div>
-                        </div>
-                        <div class="col-xs-12 col-sm-12 col-md-12 mb-2">
-                            <div class="form-group">
-                                <strong>Account name:</strong>
-                                <input type="text" class="form-control" value="{{ $disbursementRequest->prepared_by }}" readonly>
-                            </div>
-                        </div>
-                        <div class="col-xs-12 col-sm-12 col-md-12 mb-2">
-                            <div class="form-group">
-                                <strong>Particulars:</strong>
-                                <input type="text" class="form-control" value="{{ $disbursementRequest->verified_by }}" readonly>
-                            </div>
-                        </div>
-                        <div class="col-xs-12 col-sm-12 col-md-12 mb-2">
-                            <div class="form-group">
-                                <strong>Approved date:</strong>
-                                
-                                <input type="text" class="form-control" value="@if ($disbursementRequest->approved_date){{ date('F d, Y', strtotime($disbursementRequest->approved_date))}}@endif" readonly>
-                            </div>
-                        </div> 
-                        <div class="col-xs-12 col-sm-12 col-md-12 mb-2">
-                            <div class="form-group">
-                                <strong>Unit price:</strong>
-                                <input type="text" class="form-control" value="{{ $disbursementRequest->approved_by }}" readonly>
-                            </div>
-                        </div>                 
-                    </div>
+                    <table class="table table-bordered">
+                        <tr>
+                            <th>No</th>
+                            <th>Account Name</th>
+                            <th>Particulars</th>
+                            <th>Unit Price</th>
+                            <th width="280px">Action</th>
+                        </tr>
+                        @foreach ($disbursements as $disbursement)
+                        <tr>
+                            <td>{{ ++$i }}</td>
+                            <td>{{ $disbursement->account_name }}</td>
+                            <td>{{ $disbursement->particulars }}</td>
+                            <td>Php {{ $disbursement->unit_price }}</td>
+                            <td>
+                                <form action="{{ route('disbursement.destroy', $disbursement->id) }}" method="POST">
+                
+                                    <a class="btn btn-info" href="{{ route('disbursement.show',$disbursement->id) }}" data-bs-toggle="tooltip" data-bs-placement="top" title="View"><i class="fa fa-eye"></i></a>
+                    
+                                    <a class="btn btn-primary" href="{{ route('disbursement.edit',$disbursement->id) }}" data-bs-toggle="tooltip" data-bs-placement="top" title="Edit"><i class="fa fa-edit"></i></a>
+                
+                                    @csrf
+                                    @method('DELETE')
+                    
+                                    <button type="submit" class="btn btn-danger" data-bs-toggle="tooltip" data-bs-placement="top" title="Delete"><i class="fa fa-trash-o"></i></button>
+                                </form>
+                            </td>
+                        </tr>
+                        @endforeach
+                    </table>
                 </div>        
             </div>
         </div>

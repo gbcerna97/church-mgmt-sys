@@ -43,15 +43,18 @@ class User extends Authenticatable
         'password' => 'hashed',
     ];
 
-    public function hasAnyRole($roles)
+    public function isAdmin()
     {
-        return in_array($this->role, $roles);
+        return $this->is_admin;
     }
-
-    protected $routeMiddleware = [
-    // ...
-    'role' => \App\Http\Middleware\RoleMiddleware::class,
-];
+    public function isStaff1()
+    {
+        return $this->is_staff1;
+    }
+    public function isSatff2()
+    {
+        return $this->is_staff2;
+    }
 
 
 }

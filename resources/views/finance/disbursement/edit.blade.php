@@ -42,6 +42,22 @@
                             </div>
                             <div class="col-xs-12 col-sm-12 col-md-12 mb-3">
                                 <div class="form-group">
+                                    <strong>Date:</strong>
+                                    <input type="date" name="date" class="form-control" value="{{ $disbursement->date }}">
+                                </div>
+                            </div>
+                            <div class="col-xs-12 col-sm-12 col-md-12 mb-3">
+                                <div class="form-group">
+                                    <strong>Fund Source:</strong>
+                                    <select name="fund_source" id="fund_source" class="form-control">
+                                        <option value="" disabled>Select request id...</option>
+                                        <option value="Funded" @if ($disbursement->fund_source == "Funded") selected @endif>Funded</option>
+                                        <option value="GF" @if ($disbursement->fund_source == "GF") selected @endif>GF</option>
+                                    </select>
+                                </div>
+                            </div>
+                            <div class="col-xs-12 col-sm-12 col-md-12 mb-3">
+                                <div class="form-group">
                                     <strong>Released to:</strong>
                                     <input type="text" name="released_to" class="form-control" placeholder="Released to" value="{{ $disbursement->released_to }}">
                                 </div>
