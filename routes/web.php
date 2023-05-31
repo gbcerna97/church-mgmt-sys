@@ -31,27 +31,27 @@ use Illuminate\Support\Facades\Route;
 |
 */
 
-
 Route::middleware('auth:sanctum')->group(function () {
-
     // Authentication routes
     Route::get('/', [HomeController::class, 'dashboard']);
-	Route::get('dashboard', function () {
-		return view('dashboard');
-	})->name('dashboard');
+    Route::get('dashboard', [HomeController::class, 'index'])->name(
+        'dashboard'
+    );
     Route::get('/logout', [SessionsController::class, 'destroy']);
-	Route::get('/user-profile', [InfoUserController::class, 'create']);
-	Route::post('/user-profile', [InfoUserController::class, 'store'])->name('user.update');
+    Route::get('/user-profile', [InfoUserController::class, 'create']);
+    Route::post('/user-profile', [InfoUserController::class, 'store'])->name(
+        'user.update'
+    );
     Route::get('/login', function () {
-		return view('dashboard');
-	})->name('user.login');
+        return view('dashboard');
+    })->name('user.login');
 
     // Disbursement requests resource routes
     Route::resource('request', DisbursementRequestController::class);
 
     // Disbursement resource routes
     Route::resource('disbursement', DisbursementController::class);
- 
+
     // Cash counts resource routes
     Route::resource('cashcount', CashCountController::class);
 
@@ -63,16 +63,22 @@ Route::middleware('auth:sanctum')->group(function () {
     Route::resource('events', EventController::class);
 
     // Attendance routes
-    Route::get('/attendance', [AttendanceController::class, 'index'])
-        ->name('attendance.index');
-    Route::post('/attendance', [AttendanceController::class, 'store'])
-        ->name('attendance.store');
-    Route::get('/attendance/view', [AttendanceController::class, 'viewAttendance'])
-        ->name('attendance.view');
+    Route::get('/attendance', [AttendanceController::class, 'index'])->name(
+        'attendance.index'
+    );
+    Route::post('/attendance', [AttendanceController::class, 'store'])->name(
+        'attendance.store'
+    );
+    Route::get('/attendance/view', [
+        AttendanceController::class,
+        'viewAttendance',
+    ])->name('attendance.view');
 
     // Inventory resource routes
     Route::resource('inventory', InventoryController::class);
-    Route::get('/all-inventory', [InventoryController::class, 'viewAll'])->name('inventory.all');
+    Route::get('/all-inventory', [InventoryController::class, 'viewAll'])->name(
+        'inventory.all'
+    );
 
     //For staff 2
     // Givers resource routes
@@ -87,14 +93,23 @@ Route::middleware('auth:sanctum')->group(function () {
 
 Route::group(['middleware' => 'guest'], function () {
     Route::get('/register', [RegisterController::class, 'create']);
-    Route::post('/register', [RegisterController::class, 'store'])->name('user.register');
-    Route::get('/login', [SessionsController::class, 'create'])->name('user.login');
+    Route::post('/register', [RegisterController::class, 'store'])->name(
+        'user.register'
+    );
+    Route::get('/login', [SessionsController::class, 'create'])->name(
+        'user.login'
+    );
     Route::post('/session', [SessionsController::class, 'store']);
-	Route::get('/login/forgot-password', [ResetController::class, 'create']);
-	Route::post('/forgot-password', [ResetController::class, 'sendEmail']);
-	Route::get('/reset-password/{token}', [ResetController::class, 'resetPass'])->name('password.reset');
-	Route::post('/reset-password', [ChangePasswordController::class, 'changePassword'])->name('password.update');
-
+    Route::get('/login/forgot-password', [ResetController::class, 'create']);
+    Route::post('/forgot-password', [ResetController::class, 'sendEmail']);
+    Route::get('/reset-password/{token}', [
+        ResetController::class,
+        'resetPass',
+    ])->name('password.reset');
+    Route::post('/reset-password', [
+        ChangePasswordController::class,
+        'changePassword',
+    ])->name('password.update');
 });
 
 Route::get('/login', function () {

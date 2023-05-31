@@ -10,7 +10,7 @@ class Event extends Model
 {
     use HasFactory;
 
-     /**
+    /**
      * The table associated with the model.
      *
      * @var string
@@ -23,12 +23,7 @@ class Event extends Model
      * @var array
      */
 
-     protected $fillable = [
-        'title',
-        'date',
-        'venue',
-        'description',
-    ];
+    protected $fillable = ['title', 'date', 'venue', 'description', 'done'];
 
     /**
      * Get all of the attendance for the event.
@@ -37,5 +32,4 @@ class Event extends Model
     {
         return $this->hasMany(Attendance::class);
     }
-
 }

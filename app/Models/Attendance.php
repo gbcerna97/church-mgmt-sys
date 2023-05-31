@@ -42,5 +42,4 @@ class Attendance extends Model
     {
         return $this->belongsToMany(Event::class);
     }
-
 }

@@ -10,7 +10,7 @@ class Disbursement extends Model
 {
     use HasFactory;
 
-     /**
+    /**
      * The table associated with the model.
      *
      * @var string
@@ -23,18 +23,16 @@ class Disbursement extends Model
      * @var array
      */
 
-     protected $fillable = [
+    protected $fillable = [
         'request_id',
         'account_name',
         'released_to',
         'particulars',
-        'unit_price'
+        'unit_price',
     ];
 
     public function request(): BelongsTo
     {
         return $this->belongsTo(DisbursementRequest::class);
     }
-
-
 }
