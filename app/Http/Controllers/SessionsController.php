@@ -24,7 +24,7 @@ class SessionsController extends Controller
             $user = Auth::user();
             $token = $user->createToken('personal-access-token')->plainTextToken;
 
-            LogActivity::addToLog('User "' . $user->name . '" logs in.');
+            LogActivity::addToLog('User "' . $user->name . '" logs in to system.');
 
             return redirect('dashboard')->with(['success' => 'You are logged in.', 'token' => $token]);
 
