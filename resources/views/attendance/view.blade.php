@@ -1,38 +1,38 @@
-@extends('attendance.layout')
+@extends('layouts.user_type.auth')
 
 @section('content')
-    <div class="row">
-        <div class="col-lg-12">
-            <h2>Attendance View</h2>
-        </div>
-        <div class="pull-right">
-                <a href="{{ route('attendance.index') }}">Back</a>
+<div>
+    <div class="container-fluid py-4">
+        <div class="card">
+            <div class="card-header pb-0 px-3">
+                <h2 class="mb-0">{{ __('Attendance View') }}</h2>
+                <div class="pull-left">
+                    <a class="btn btn-success" href="{{ route('inventory.create') }}" data-bs-toggle="tooltip" data-bs-placement="top" title="Add New Purchased Item">Add New</a>
+                </div>
             </div>
-    </div>
-
-    <div class="row">
-        <div class="col-lg-12">
-            <table class="table">
-                <thead>
-                    <tr>
-                        <th>Event</th>
-                        <th>Member Names</th>
-                    </tr>
-                </thead>
-                <tbody>
-                    @foreach($events as $event)
+            <div class="card-body pt-4 p-3">
+                <div>
+                    <table class="table table-bordered">
                         <tr>
-                            <td>{{ $event->title }}</td>
-                            <td>
-                            @foreach($event->attendances as $attendance)
-                                {{ $attendance['member_name'] }} - {{ $attendance['status'] }}<br>
-                            @endforeach
-
-                            </td>
+                            <th>Event</th>
+                            <th>Member Names</th>
                         </tr>
-                    @endforeach
-                </tbody>
-            </table>
+                        @foreach($attendances as $attendance)
+                            <tr>
+                                <td>{{ $attendance->title }}</td>
+                                <td>
+                                    {!! nl2br(e($attendance->member_info)) !!}
+                                </td>
+                            </tr>
+                        @endforeach
+                    </table>
+                </div>     
+            </div>
         </div>
     </div>
+</div>
+
 @endsection
+@push('view')
+
+@endpush

@@ -10,6 +10,16 @@ use App\Http\Controllers\InfoUserController;
 use App\Http\Controllers\RegisterController;
 use App\Http\Controllers\ResetController;
 use App\Http\Controllers\SessionsController;
+use App\Http\Controllers\Finance\GiverController;
+use App\Http\Controllers\Finance\CashCountController;
+use App\Http\Controllers\Finance\FinanceController;
+use App\Http\Controllers\Finance\DisbursementController;
+use App\Http\Controllers\Finance\DisbursementRequestController;
+use App\Http\Controllers\Finance\DonationController;
+use App\Http\Controllers\Event\AttendanceController;
+use App\Http\Controllers\Event\EventController;
+use App\Http\Controllers\Membership\MemberController;
+use App\Http\Controllers\Inventory\InventoryController;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Password;
 use Illuminate\Support\Facades\Route;
@@ -25,22 +35,112 @@ use Illuminate\Support\Facades\Route;
 |
 */
 
+//Admin routes
+Route::middleware('auth:sanctum', \App\Http\Middleware\RoleMiddleware::class . ':admin')->group(function () {
 
-Route::middleware('auth:sanctum')->group(function () {
-
-    Route::get('/', [HomeController::class, 'home']);
-	Route::get('home', function () {
-		return view('home');
-	})->name('home');
+    // Authentication routes
+    Route::get('/', [HomeController::class, 'dashboard'])->name('dashboard');
+	Route::get('/dashboard', [HomeController::class, 'dashboard'])->name('dashboard');
     Route::get('/logout', [SessionsController::class, 'destroy']);
 	Route::get('/user-profile', [InfoUserController::class, 'create']);
 	Route::post('/user-profile', [InfoUserController::class, 'store'])->name('user.update');
     Route::get('/login', function () {
-		return view('home');
+		return view('dashboard');
 	})->name('user.login');
+
+    // Disbursement requests resource routes
+    Route::resource('request', DisbursementRequestController::class);
+
+    // Disbursement resource routes
+    Route::resource('disbursement', DisbursementController::class);
+ 
+    // Cash counts resource routes
+    Route::resource('cashcount', CashCountController::class);
+
+    // Members resource routes
+    Route::resource('member', MemberController::class);
+
+    // Events resource routes
+    Route::resource('events', EventController::class);
+
+    // Attendance routes
+    Route::get('/attendance', [AttendanceController::class, 'index'])
+        ->name('attendance.index');
+    Route::post('/attendance', [AttendanceController::class, 'store'])
+        ->name('attendance.store');
+    Route::get('/attendance/view', [AttendanceController::class, 'viewAttendance'])
+        ->name('attendance.view');
+
+    // Inventory resource routes
+    Route::resource('inventory', InventoryController::class);
+    Route::get('/all-inventory', [InventoryController::class, 'viewAll'])->name('inventory.all');
+
+    // Givers resource routes
+    Route::resource('donation', DonationController::class);
+
+    // Finance resource routes
+    Route::resource('accounting', FinanceController::class);
+    Route::get('/monthly-report', [FinanceController::class, 'viewMonthList'])->name('accounting.report');
+    Route::get('/monthly-report/{month}', [FinanceController::class, 'viewReportDetail'])->name('accounting.detail');
+
+    // Givers resource routes
+    Route::resource('giver', GiverController::class);
 });
 
+//Staff1 routes
+Route::middleware('auth:sanctum', \App\Http\Middleware\RoleMiddleware::class . ':admin,staff1')->group(function () {
 
+    // Authentication routes
+    Route::get('/', [HomeController::class, 'dashboard'])->name('dashboard');
+	Route::get('/dashboard', [HomeController::class, 'dashboard'])->name('dashboard');
+    Route::get('/logout', [SessionsController::class, 'destroy']);
+	Route::get('/user-profile', [InfoUserController::class, 'create']);
+	Route::post('/user-profile', [InfoUserController::class, 'store'])->name('user.update');
+    Route::get('/login', function () {
+		return view('dashboard');
+	})->name('user.login');
+
+    // Members resource routes
+    Route::resource('member', MemberController::class);
+
+    // Events resource routes
+    Route::resource('events', EventController::class);
+
+    // Attendance routes
+    Route::get('/attendance', [AttendanceController::class, 'index'])
+        ->name('attendance.index');
+    Route::post('/attendance', [AttendanceController::class, 'store'])
+        ->name('attendance.store');
+    Route::get('/attendance/view', [AttendanceController::class, 'viewAttendance'])
+        ->name('attendance.view');
+
+    // Inventory resource routes
+    Route::resource('inventory', InventoryController::class);
+    Route::get('/all-inventory', [InventoryController::class, 'viewAll'])->name('inventory.all');
+});
+
+//Satff2 routes
+Route::middleware('auth:sanctum', \App\Http\Middleware\RoleMiddleware::class . ':admin,staff2')->group(function () {
+
+    // Authentication routes
+    Route::get('/', [HomeController::class, 'dashboard'])->name('dashboard');
+	Route::get('/dashboard', [HomeController::class, 'dashboard'])->name('dashboard');
+    Route::get('/logout', [SessionsController::class, 'destroy']);
+	Route::get('/user-profile', [InfoUserController::class, 'create']);
+	Route::post('/user-profile', [InfoUserController::class, 'store'])->name('user.update');
+    Route::get('/login', function () {
+		return view('dashboard');
+	})->name('user.login');
+
+    // Givers resource routes
+    Route::resource('donation', DonationController::class);
+
+    // Finance resource routes
+    Route::resource('accounting', FinanceController::class);
+
+    // Givers resource routes
+    Route::resource('giver', GiverController::class);
+});
 
 Route::group(['middleware' => 'guest'], function () {
     Route::get('/register', [RegisterController::class, 'create']);

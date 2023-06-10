@@ -42,4 +42,19 @@ class User extends Authenticatable
         'email_verified_at' => 'datetime',
         'password' => 'hashed',
     ];
+
+    public function isAdmin()
+    {
+        return $this->is_admin;
+    }
+    public function isStaff1()
+    {
+        return $this->is_staff1;
+    }
+    public function isSatff2()
+    {
+        return $this->is_staff2;
+    }
+
+
 }

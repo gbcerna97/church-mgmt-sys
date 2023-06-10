@@ -4,6 +4,7 @@ namespace App\Models;
 
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
+use Illuminate\Database\Eloquent\Relations\HasMany;
 
 class Event extends Model
 {
@@ -23,10 +24,18 @@ class Event extends Model
      */
 
      protected $fillable = [
-        'id',
         'title',
         'date',
         'venue',
         'description',
     ];
+  
+    /**
+     * Get all of the attendance for the event.
+     */
+    public function attendance(): HasMany
+    {
+        return $this->hasMany(Attendance::class);
+    }
+
 }

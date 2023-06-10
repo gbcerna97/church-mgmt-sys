@@ -22,7 +22,7 @@ class SessionsController extends Controller
         if (Auth::attempt($attributes)) {
             $user = Auth::user();
             $token = $user->createToken('personal-access-token')->plainTextToken;
-            return redirect('home')->with(['success' => 'You are logged in.', 'token' => $token]);
+            return redirect('dashboard')->with(['success' => 'You are logged in.', 'token' => $token]);
         } else {
             return back()->withErrors(['email' => 'Email or password invalid.']);
         }
