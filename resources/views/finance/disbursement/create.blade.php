@@ -80,8 +80,8 @@
                             </div>
                             <div class="col-xs-12 col-sm-12 col-md-12 mb-3">
                                 <div class="form-group">
-                                    <strong>Unit price:</strong>
-                                    <input type="number" name="unit_price" class="form-control" placeholder="0.00">
+                                    <strong>Total price:</strong>
+                                    <input type="number" step=0.001 name="unit_price" class="form-control" placeholder="0.00">
                                 </div>
                             </div>
                             <div class="col-xs-12 col-sm-12 col-md-12 text-center">

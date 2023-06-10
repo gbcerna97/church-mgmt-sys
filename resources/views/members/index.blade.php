@@ -9,9 +9,25 @@
                 <div class="pull-left">
                     <a class="btn btn-success" href="{{ route('member.create') }}" data-bs-toggle="tooltip" data-bs-placement="top" title="Add New Member">Add New</a>
                 </div>
+                <div class="pull-right">
+                    <form action="{{ route('member.search') }}" method="GET" class="form-inline">
+                        <div class="form-group row">
+                            <div class="col-8">
+                                <input type="text" class="form-control" name="search" placeholder="Search">
+                                
+                            </div>
+                            <div class="col-4">
+                                <button type="submit" class="btn btn-primary">Search</button>
+                            </div>
+                            
+                        </div>
+                    </form>
+                </div>
             </div>
+            
             <div class="card-body pt-4 p-3">
                 <div>
+                    
                     @if ($message = Session::get('success'))
                         <div class="alert alert-success">
                             <p>{{ $message }}</p>
@@ -56,6 +72,3 @@
     </div>
 </div>
 @endsection
-@push('dashboard')
-
-@endpush

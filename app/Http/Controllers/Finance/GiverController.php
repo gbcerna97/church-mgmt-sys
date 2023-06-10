@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers\Finance;
 
+use App\Models\CountingService;
 use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
 use App\Models\Giver;
@@ -32,10 +33,14 @@ class GiverController extends Controller
     /**
      * Create a new resource.
      */
-    public function create(Request $request)
+    public function create(Request $request, $date)
     {
-        return view('finance.giver.create');
+        // Use the $date parameter in your code as needed
+        $s_date = $date;
+
+        return view('finance.giver.create', compact('s_date'));
     }
+
 
     /**
      * Store a newly created resource in storage.
@@ -46,12 +51,45 @@ class GiverController extends Controller
             'date' => 'required',
         ]);
 
+        $countingService = CountingService::where('date', $request->date)->first();
+
+        $totalCashCount = $request->cc_1000 * 1000 +
+                      $request->cc_500 * 500 +
+                      $request->cc_200 * 200 +
+                      $request->cc_100 * 100 +
+                      $request->cc_50 * 50 +
+                      $request->cc_20 * 20 +
+                      $request->cc_10 * 10 +
+                      $request->cc_5 * 5 +
+                      $request->cc_1 * 1 +
+                      $request->cc_0_25 * 0.25 +
+                      $request->cc_0_1 * 0.1 +
+                      $request->cc_0_05 * 0.05 +
+                      $request->cc_0_01 * 0.01;
+
+    // Calculate the total received amount
+    $totalReceived = $request->tithe +
+                     $request->offering +
+                     $request->mission +
+                     $request->sanctuary +
+                     $request->love_gift +
+                     $request->dance_ministry;
+
+    // Validate the total received amount matches the cash count
+    if ($totalReceived != $totalCashCount) {
+        return redirect()->back()->withInput()->withErrors("Total received amount does not match the cash count.");
+    }
+
+    
         // Aggregate the fields
+        $f_tithe = $request->tithe;
+        $f_offering = $request->offering;
         $total = $request->tithe + $request->offering + $request->mission + $request->sanctuary + $request->love_gift + $request->dance_ministry;
         $others =$request->mission + $request->sanctuary + $request->love_gift + $request->dance_ministry;
 
         $giver = new Giver;
         $giver->giver_name = $request->giver_name;
+        $giver->counting_services_id = $countingService->id;
         $giver->date = $request->date;
         $giver->tithe = $request->tithe;
         $giver->offering = $request->offering;
@@ -73,6 +111,7 @@ class GiverController extends Controller
         $giver->cc_0_05 += $request->cc_0_05;
         $giver->cc_0_01 += $request->cc_0_01;
         $giver->total = $total;
+
         $giver->save();
 
         // Check if the date already exists in the funds table
@@ -86,19 +125,24 @@ class GiverController extends Controller
         if ($existingFund) {
             // Update the existing fund total
             $existingFund->fund += $total;
-            $existingFund->tithe += $request->tithe;
-            $existingFund->offering += $request->offering;
+            $existingFund->tithe += $f_tithe;
+            $existingFund->offering += $f_offering;
             $existingFund->others += $others;
             $existingFund->save();
+
+            \LogActivity::addToLog('Modified fund for' + $existingFund->date);
+            dd('Log successfully inserted.');
         } else {
             // Create a new fund record
             Fund::create([
-                'date' => $request->date,
+                'date' => $giver->date,
                 'fund' => $total,
-                'tithe' => $request->tithe,
-                'offering' => $request->offering,
+                'tithe' => $f_tithe,
+                'offering' => $f_offering,
                 'others' => $others,
             ]);
+            \LogActivity::addToLog('Created fund for' + $giver->date);
+            dd('Log successfully inserted.');
         }
 
         $existingCashCount = CashCount::where('date', $request->date)->first();
@@ -119,6 +163,9 @@ class GiverController extends Controller
             $existingCashCount->cc_0_05 += $request->cc_0_05;
             $existingCashCount->cc_0_01 += $request->cc_0_01;
             $existingCashCount->save();
+
+            \LogActivity::addToLog('Modified cash count for' + $existingCashCount->date);
+            dd('Log successfully inserted.');
         } else {
             CashCount::create([
                 // Create a new cash count record
@@ -137,9 +184,14 @@ class GiverController extends Controller
                 'cc_0_01' => $request->cc_0_01,
                 'date' => $request->date,
             ]);
+            \LogActivity::addToLog('Created cash count for' + $request->date);
+            dd('Log successfully inserted.');
         }
+        
 
-        return redirect()->route('giver.index')->with('success','Record Added Successfully.');
+        return redirect()->route('finance.counting_services.show', ['countingService' => $countingService->id])->with('success', 'Record Added Successfully.');
+
+
     }
 
     /**
@@ -167,6 +219,7 @@ class GiverController extends Controller
         $request->validate([
             'date' => 'required',   
         ]);
+
 
         $existingCashCount = CashCount::where('date', $request->date)->first();
 
@@ -261,7 +314,11 @@ class GiverController extends Controller
             $existingFund->save();
         }
 
-        return redirect()->route('giver.index')->with('success','Giver Record Updated Successfully.');
+        $countingService = CountingService::where('date', $request->date)->first();
+
+
+        return redirect()->route('finance.counting_services.show', ['countingService' => $countingService->id])->with('success', 'Record Updated Successfully.');
+
     }
 
     /**
@@ -288,4 +345,19 @@ class GiverController extends Controller
 
         return redirect()->route('giver.index')->with('success', 'Record Deleted Succesfully');
     }
+
+    public function search(Request $request)
+       {
+           $search = $request->input('search');
+   
+           $query = Giver::query();
+   
+           if ($search) {
+               $query->where('giver_name', 'LIKE', "%$search%");
+           }
+   
+           $givers = $query->latest()->paginate(10);
+   
+           return view('finance.giver.index', compact('givers', 'search'))->with('i', (request()->input('page', 1) - 1) * 5);
+       }
 }

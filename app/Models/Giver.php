@@ -13,6 +13,7 @@ class Giver extends Model
     protected $fillable = [
         'giver_name',
         'date',
+        'counting_services_id',
         'church_id',
         'tithe',
         'offering',

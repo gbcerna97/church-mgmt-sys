@@ -7,6 +7,8 @@ use Illuminate\Http\Request;
 use App\Models\Disbursement;
 use App\Models\ChurchInfo;
 use App\Models\DisbursementRequest;
+use App\Models\Voucher;
+use App\Helpers\LogActivity;
 
 class DisbursementController extends Controller
 {
@@ -40,8 +42,9 @@ class DisbursementController extends Controller
             'request_id' => 'required',
         ]);
 
+        
         $year = date('Y');
-        $lastDisbursement = Disbursement::where('voucher_number', 'like', 'CV#' . $year . '-%')
+        $lastDisbursement = Voucher::where('voucher_number', 'like', 'CV#' . $year . '-%')
             ->orderBy('voucher_number', 'desc')
             ->first();
 
@@ -60,9 +63,16 @@ class DisbursementController extends Controller
         }
         $church->save();
 
+        LogActivity::addToLog('Updated overall fund, amount subtracted with  ' . $cvNumber);
+
+        $voucher = new Voucher($request->all());
         $disbursement = new Disbursement($request->all());
-        $disbursement->voucher_number = $cvNumber;
         $disbursement->save();
+        $voucher->voucher_number = $cvNumber;
+        $voucher->dis_id = $disbursement -> id;
+        $voucher->save();
+       
+        LogActivity::addToLog('Added new disbursement record with ' . $cvNumber);
 
         return redirect()->route('disbursement.index')->with('success', 'Record Added Successfully.');
     }
@@ -105,8 +115,12 @@ class DisbursementController extends Controller
         }
         $church->save();
 
+        LogActivity::addToLog('Updated overall fund, amount subrtracted with  ' . $disbursement->voucher_number);
+
         $disbursement->update($request->all());
         
+        LogActivity::addToLog('Updated disbursement record with ' . $disbursement->voucher_number);
+
         return redirect()
             ->route('disbursement.index')
             ->with('success', 'Product Updated Successfully.');
@@ -122,8 +136,17 @@ class DisbursementController extends Controller
             $church->overall_funds += $disbursement->unit_price;
         }
 
+        LogActivity::addToLog('Updated overall fund, amount subtracted with  ' . $disbursement->voucher_number);
+
         $disbursement->delete();
 
+        LogActivity::addToLog('Updated disbursement record with ' . $disbursement->voucher_number);
+
         return redirect()->route('disbursement.index')->with('success', 'Record Deleted Succesfully');
+    }
+
+    public function viewDisbursement()
+    {
+        return view('finance.disbursement.view_disbursment');
     }
 }

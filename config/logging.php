@@ -56,6 +56,8 @@ return [
             'driver' => 'stack',
             'channels' => ['single'],
             'ignore_exceptions' => false,
+            'table' => 'logs',
+            'connection' => null,
         ],
 
         'single' => [

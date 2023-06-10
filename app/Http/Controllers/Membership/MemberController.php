@@ -5,6 +5,7 @@ namespace App\Http\Controllers\Membership;
 use App\Http\Controllers\Controller;
 use App\Models\Member;
 use Illuminate\Http\Request;
+use App\Helpers\LogActivity;
 
 class MemberController extends Controller
 {
@@ -23,7 +24,9 @@ class MemberController extends Controller
      */
     public function create()
     {
+        \Log::channel('database')->info('New member added: ' . $request->input('member_name'));
         return view('members.create');
+
     }
 
     /**
@@ -44,6 +47,8 @@ class MemberController extends Controller
         ]);
 
         Member::create($request->all());
+
+        LogActivity::addToLog('Added new member record for "' . $request->member_name . '"');
 
         return redirect()->route('member.index')->with('success','Member Added Successfully.');
     }
@@ -66,7 +71,7 @@ class MemberController extends Controller
     }
 
     /**
-     * Update the specified resource in storage.events
+     * Update the specified resource in storage.
      */
     public function update(Request $request, Member $member)
     {
@@ -84,6 +89,8 @@ class MemberController extends Controller
 
         $member->update($request->all());
 
+        LogActivity::addToLog('Modified member record for "' . $request->member_name . '"');
+
         return redirect()->route('member.index')->with('success','Member Updated Successfully.');
     }
 
@@ -92,10 +99,33 @@ class MemberController extends Controller
      */
     public function destroy(Member $member)
     {
+
+        LogActivity::addToLog('Deleted member record for "' . $request->member_name . '"');
+
         $member->delete();
+
+        // Log success message
+        \Log::channel('database')->info('New member added: ' . $request->input('member_name'));
+
 
         return redirect()->route('member.index')->with('success','Member deleted successfully');
     }
 
+
+    // Search function
+    public function search(Request $request)
+    {
+        $search = $request->input('search');
+
+        $query = Member::query();
+
+        if ($search) {
+            $query->where('member_name', 'LIKE', "%$search%");
+        }
+
+        $members = $query->latest()->paginate(10);
+
+        return view('members.index', compact('members', 'search'))->with('i', (request()->input('page', 1) - 1) * 5);
+    }
 
 }

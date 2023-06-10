@@ -3,9 +3,10 @@
 namespace App\Http\Controllers\Finance;
 
 use App\Http\Controllers\Controller;
-use Illuminate\Http\Request;
+use Illuminate\Http\Request;    
 use App\Models\Donation;
 use App\Models\ChurchInfo;
+use App\Helpers\LogActivity;
 
 class DonationController extends Controller
 {
@@ -41,12 +42,16 @@ class DonationController extends Controller
 
         $donation = Donation::create($request->all());
 
+        LogActivity::addToLog('Added new donation record for "' . $request->donor_name . '". Donated on ' . $request->date . '.');
+
         // Check if donation type is monetary and set donations_funds value accordingly
         if ($donation->amount) {
             $church = ChurchInfo::first();
             $church->donations_funds += $donation->amount;
             $church->overall_funds += $donation->amount;
             $church->save();
+
+            LogActivity::addToLog('Updated donation fund.');
         }
 
         return redirect()->route('donation.index')->with('success','Record Added Successfully.');
@@ -91,9 +96,13 @@ class DonationController extends Controller
             $church->overall_funds -= $oldAmount;
             $church->overall_funds += $newAmount;
             $church->save();
+
+            LogActivity::addToLog('Updated donation fund.');
         }
 
         $donation->update($request->all());
+
+        LogActivity::addToLog('Modified donation record for "' . $request->donor_name . '". Donated on ' . $request->date . '.');
 
         return redirect()->route('donation.index')->with('success','Record Updated Successfully.');
     }
@@ -110,9 +119,15 @@ class DonationController extends Controller
             $church->donations_funds -= $donation->amount;
             $church->overall_funds -= $donation->amount;
             $church->save();
+
+            LogActivity::addToLog('Updated donation fund.');
         }
+        
+        LogActivity::addToLog('Deleted donation record for "' . $donation->donor_name . '".');
 
         $donation->delete();
+
+        
 
         return redirect()->route('donation.index')->with('success', 'Record Deleted Successfully');
     }

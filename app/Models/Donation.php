@@ -29,4 +29,9 @@ class Donation extends Model
         'donation_name',
         'amount'
     ];
+
+    public function images(): HasMany
+    {
+        return $this->hasMany(DonationImage::class, 'donation_id');
+    }
 }

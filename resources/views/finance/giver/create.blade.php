@@ -33,140 +33,140 @@
                         @csrf
                     
                         <div class="row">
-                            <!--  Giver fields -->
-                            <div class="col-xs-12 col-sm-12 col-md-12 mb-3">
+                            <!-- Giver fields -->
+                            <div class="col-md-6 mb-3">
                                 <div class="form-group">
                                     <strong>Giver name:</strong>
                                     <input type="text" name="giver_name" class="form-control" placeholder="Giver name">
                                 </div>
                             </div>
-                            <div class="col-xs-12 col-sm-12 col-md-12 mb-3">
+                            <div class="col-md-6 mb-3">
                                 <div class="form-group">
                                     <strong>Date:</strong>
-                                    <input type="date" name="date" class="form-control" placeholder="Date">
+                                    <input type="date" name="date" class="form-control" readonly value="{{ $s_date }}" placeholder="Date" >
                                 </div>
                             </div>
-                            <div class="col-xs-12 col-sm-12 col-md-12 mb-3">
+                            <div class="col-md-6 mb-3">
                                 <div class="form-group">
                                     <strong>Tithe:</strong>
-                                    <input type="number" name="tithe" class="form-control" placeholder="0.00">
+                                    <input type="number" name="tithe" step=0.01 class="form-control" placeholder="0.00">
                                 </div>
                             </div>
-                            <div class="col-xs-12 col-sm-12 col-md-12 mb-3">
+                            <div class="col-md-6 mb-3">
                                 <div class="form-group">
                                     <strong>Offering:</strong>
-                                    <input type="number" name="offering" class="form-control" placeholder="0.00">
+                                    <input type="number" name="offering" step=0.01 class="form-control" placeholder="0.00">
                                 </div>
                             </div>
-                            <div class="col-xs-12 col-sm-12 col-md-12 mb-3">
+                            <div class="col-md-6 mb-3">
                                 <div class="form-group">
                                     <strong>Mission:</strong>
-                                    <input type="number" name="mission" class="form-control" placeholder="0.00">
+                                    <input type="number" name="mission" step=0.01 class="form-control" placeholder="0.00">
                                 </div>
                             </div>
-                            <div class="col-xs-12 col-sm-12 col-md-12 mb-3">
+                            <div class="col-md-6 mb-3">
                                 <div class="form-group">
                                     <strong>Sanctuary:</strong>
-                                    <input type="number" name="sanctuary" class="form-control" placeholder="0.00">
+                                    <input type="number" name="sanctuary" step=0.01 class="form-control" placeholder="0.00">
                                 </div>
                             </div>
-                            <div class="col-xs-12 col-sm-12 col-md-12 mb-3">
+                            <div class="col-md-6 mb-3">
                                 <div class="form-group">
                                     <strong>Love Gift:</strong>
-                                    <input type="number" name="love_gift" class="form-control" placeholder="0.00">
+                                    <input type="number" name="love_gift" step=0.01 class="form-control" placeholder="0.00">
                                 </div>
                             </div>
-                            <div class="col-xs-12 col-sm-12 col-md-12 mb-3">
+                            <div class="col-md-6 mb-3">
                                 <div class="form-group">
                                     <strong>Dance Ministry:</strong>
-                                    <input type="text" name="dance_ministry" class="form-control" placeholder="0.00">
+                                    <input type="text" name="dance_ministry" step=0.01 class="form-control" placeholder="0.00">
                                 </div>
                             </div>
                             
-                            <div class="my-2">
+                            <div class="col-md-12 my-2">
                                 <p>Cash Count</p>
                             </div>
-                            <!--  Cash count fields -->
-                            <div class="col-xs-12 col-sm-12 col-md-12 mb-3">
+                            <!-- Cash count fields -->
+                            <div class="col-md-6 mb-3">
                                 <div class="form-group">
                                     <strong>Php 1,000:</strong>
                                     <input type="number" name="cc_1000" class="form-control" placeholder="0">
                                 </div>
                             </div>
-                            <div class="col-xs-12 col-sm-12 col-md-12 mb-3">
+                            <div class="col-md-6 mb-3">
                                 <div class="form-group">
                                     <strong>Php 500:</strong>
                                     <input type="number" name="cc_500" class="form-control" placeholder="0">
                                 </div>
                             </div>
-                            <div class="col-xs-12 col-sm-12 col-md-12 mb-3">
+                            <div class="col-md-6 mb-3">
                                 <div class="form-group">
                                     <strong>Php 200:</strong>
                                     <input type="number" name="cc_200" class="form-control" placeholder="0">
                                 </div>
                             </div>
-                            <div class="col-xs-12 col-sm-12 col-md-12 mb-3">
+                            <div class="col-md-6 mb-3">
                                 <div class="form-group">
                                     <strong>Php 100:</strong>
                                     <input type="number" name="cc_100" class="form-control" placeholder="0">
                                 </div>
                             </div>
-                            <div class="col-xs-12 col-sm-12 col-md-12 mb-3">
+                            <div class="col-md-6 mb-3">
                                 <div class="form-group">
                                     <strong>Php 50:</strong>
                                     <input type="number" name="cc_50" class="form-control" placeholder="0">
                                 </div>
                             </div>
-                            <div class="col-xs-12 col-sm-12 col-md-12 mb-3">
+                            <div class="col-md-6 mb-3">
                                 <div class="form-group">
                                     <strong>Php 20:</strong>
                                     <input type="number" name="cc_20" class="form-control" placeholder="0">
                                 </div>
                             </div>
-                            <div class="col-xs-12 col-sm-12 col-md-12 mb-3">
+                            <div class="col-md-6 mb-3">
                                 <div class="form-group">
                                     <strong>Php 10:</strong>
                                     <input type="number" name="cc_10" class="form-control" placeholder="0">
                                 </div>
                             </div>
-                            <div class="col-xs-12 col-sm-12 col-md-12 mb-3">
+                            <div class="col-md-6 mb-3">
                                 <div class="form-group">
                                     <strong>Php 5:</strong>
                                     <input type="number" name="cc_5" class="form-control" placeholder="0">
                                 </div>
                             </div>
-                            <div class="col-xs-12 col-sm-12 col-md-12 mb-3">
+                            <div class="col-md-6 mb-3">
                                 <div class="form-group">
                                     <strong>Php 1:</strong>
                                     <input type="number" name="cc_1" class="form-control" placeholder="0">
                                 </div>
                             </div>
-                            <div class="col-xs-12 col-sm-12 col-md-12 mb-3">
+                            <div class="col-md-6 mb-3">
                                 <div class="form-group">
                                     <strong>¢ 0.25:</strong>
                                     <input type="number" name="cc_0_25" class="form-control" placeholder="0">
                                 </div>
                             </div>
-                            <div class="col-xs-12 col-sm-12 col-md-12 mb-3">
+                            <div class="col-md-6 mb-3">
                                 <div class="form-group">
                                     <strong>¢ 0.10:</strong>
                                     <input type="number" name="cc_0_1" class="form-control" placeholder="0">
                                 </div>
                             </div>
-                            <div class="col-xs-12 col-sm-12 col-md-12 mb-3">
+                            <div class="col-md-6 mb-3">
                                 <div class="form-group">
                                     <strong>¢ 0.05:</strong>
                                     <input type="number" name="cc_0_05" class="form-control" placeholder="0">
                                 </div>
                             </div>
-                            <div class="col-xs-12 col-sm-12 col-md-12 mb-3">
+                            <div class="col-md-6 mb-3">
                                 <div class="form-group">
                                     <strong>¢ 0.01:</strong>
                                     <input type="number" name="cc_0_01" class="form-control" placeholder="0">
                                 </div>
                             </div>
 
-                            <div class="col-xs-12 col-sm-12 col-md-12 text-center">
+                            <div class="col-md-12 text-center">
                                 <button type="submit" class="btn btn-primary">Submit</button>
                             </div>
                         </div>
@@ -181,4 +181,6 @@
 @endsection
 @push('create')
 
+
 @endpush
+</style>

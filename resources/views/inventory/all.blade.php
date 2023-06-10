@@ -5,10 +5,7 @@
     <div class="container-fluid py-4">
         <div class="card">
             <div class="card-header pb-0 px-3">
-                <h2 class="mb-0">{{ __('Inventory Management') }}</h2>
-                <div class="pull-left">
-                    <a class="btn btn-success" href="{{ route('inventory.create') }}" data-bs-toggle="tooltip" data-bs-placement="top" title="Add New Purchased Item">Add New</a>
-                </div>
+                <h2 class="mb-0">{{ __('Inventory Management - All Items') }}</h2>
             </div>
             <div class="card-body pt-4 p-3">
                 <div>

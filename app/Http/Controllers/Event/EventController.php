@@ -5,6 +5,7 @@ namespace App\Http\Controllers\Event;
 use App\Http\Controllers\Controller;
 use App\Models\Event;
 use Illuminate\Http\Request;
+use App\Helpers\LogActivity;
 
 class EventController extends Controller
 {
@@ -39,6 +40,8 @@ class EventController extends Controller
 
         Event::create($request->all());
 
+        LogActivity::addToLog('Added new event ' . $request->title);
+
         return redirect()->route('events.index')->with('success','Event Added Successfully.');
     }
 
@@ -72,6 +75,8 @@ class EventController extends Controller
 
         $event->update($request->all());
 
+        LogActivity::addToLog('Modified event ' . $event->title);
+
         return redirect()->route('events.index')->with('success','Event Updated Successfully.');
     }
 
@@ -81,6 +86,8 @@ class EventController extends Controller
     public function destroy(Event $event)
     {
         $event->delete();
+
+        LogActivity::addToLog('Deleted event ' . $event->title);
 
         return redirect()->route('events.index')->with('success', 'Event Delete Succesfully');
     }

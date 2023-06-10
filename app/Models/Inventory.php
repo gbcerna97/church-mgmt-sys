@@ -4,6 +4,7 @@ namespace App\Models;
 
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
+use Illuminate\Database\Eloquent\Relations\HasMany;
 
 class Inventory extends Model
 {
@@ -32,4 +33,9 @@ class Inventory extends Model
         'unit_cost',
         'total_cost',
     ];
+
+    public function images(): HasMany
+    {
+        return $this->hasMany(InvetoryImage::class, 'inventory_id');
+    }
 }

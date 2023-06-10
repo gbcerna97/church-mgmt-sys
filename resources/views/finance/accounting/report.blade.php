@@ -6,7 +6,21 @@
         <div class="card">
             <div class="card-header pb-0 px-3">
                 <h2 class="mb-0">{{ __('Monthly Reports') }}</h2>
+                <div class="pull-right">
+                    <form action="" method="GET" class="form-inline">
+                        <div class="form-group row">
+                            <div class="col-8">
+                                <input type="text" class="form-control" name="search" placeholder="Search">
+                                
+                            </div>
+                            <div class="col-4">
+                                <button type="submit" class="btn btn-primary">Search</button>
+                            </div>
+                        </div>
+                    </form>
+                </div>
             </div>
+            
             <div class="card-body pt-4 p-3">
                 <div>
                     @if ($message = Session::get('success'))
@@ -37,6 +51,9 @@
         </div>
     </div>
 </div>
+
+
+
 
 @endsection
 @push('index')

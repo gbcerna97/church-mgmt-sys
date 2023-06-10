@@ -64,6 +64,16 @@
       $('[data-toggle="tooltip"]').tooltip();
     });
   </script>
+
+  <script>
+    function printCardBody() {
+        var printContents = document.getElementById("printMe").innerHTML;
+        var originalContents = document.body.innerHTML;
+        document.body.innerHTML = printContents;
+        window.print();
+        document.body.innerHTML = originalContents;
+    }
+  </script>
 </body>
 
 </html>

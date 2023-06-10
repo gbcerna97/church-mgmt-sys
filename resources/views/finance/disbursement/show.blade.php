@@ -25,6 +25,7 @@
                             <td colspan="2">Date: <b>{{ $disbursement->date }}</b></td>
                         </tr>
                         <tr>
+                            
                             <td colspan="4">Account Code</td>
                             <td>Account Titles</td>
                             <td>Fund Source</td>

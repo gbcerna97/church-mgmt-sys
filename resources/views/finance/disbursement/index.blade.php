@@ -8,7 +8,19 @@
                 <h2 class="mb-0">{{ __('Disbursement Management') }}</h2>
                 <div class="pull-left">
                     <a class="btn btn-success" href="{{ route('disbursement.create') }}" data-bs-toggle="tooltip" data-bs-placement="top" title="Add New Disbursement Record">Add New</a>
-                    <a class="btn btn-info" href="{{ route('request.index') }}" data-bs-toggle="tooltip" data-bs-placement="top" title="View All Disbursement">View Disbursement Requests</a>
+                </div>
+                <div class="pull-right">
+                    <form action="" method="GET" class="form-inline">
+                        <div class="form-group row">
+                            <div class="col-8">
+                                <input type="text" class="form-control" name="search" placeholder="Search">
+                                
+                            </div>
+                            <div class="col-4">
+                                <button type="submit" class="btn btn-primary">Search</button>
+                            </div>
+                        </div>
+                    </form>
                 </div>
             </div>
             <div class="card-body pt-4 p-3">
@@ -36,7 +48,6 @@
                             <td>
                                 <form action="{{ route('disbursement.destroy', $disbursement->id) }}" method="POST">
                 
-                                    <a class="btn btn-info" href="{{ route('disbursement.show',$disbursement->id) }}" data-bs-toggle="tooltip" data-bs-placement="top" title="View"><i class="fa fa-eye"></i></a>
                     
                                     <a class="btn btn-primary" href="{{ route('disbursement.edit',$disbursement->id) }}" data-bs-toggle="tooltip" data-bs-placement="top" title="Edit"><i class="fa fa-edit"></i></a>
                 

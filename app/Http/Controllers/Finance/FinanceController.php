@@ -8,6 +8,13 @@ use App\Models\CashCount;
 use App\Models\Giver;
 use App\Models\Fund;
 use App\Models\ChurchInfo;
+use App\Models\WeeklyAllowance;
+use App\Models\DisbursementRequest;
+use App\Models\Disbursement;
+
+
+use Illuminate\Support\Facades\DB;
+
 
 class FinanceController extends Controller
 {
@@ -37,6 +44,7 @@ class FinanceController extends Controller
             ->where('date', $date)
             ->groupBy('date')
             ->get();
+            
         
         $fund = Fund::where('date', $date)->first();
 
@@ -72,6 +80,8 @@ class FinanceController extends Controller
             $cc_0_05_t +
             $cc_0_01_t;
 
+        
+            
         $cashCount->total = $total;
         $cashCount->save();
 
@@ -90,14 +100,67 @@ class FinanceController extends Controller
         return view('finance.accounting.report', ['months' => $months])->with('i', (request()->input('page', 1) - 1) * 5);;
     }
 
-    public function viewReportDetail($month)
-    {
-        $selectedMonth = $month;
-        $funds = Fund::whereYear('date', '=', date('Y', strtotime($selectedMonth)))
-            ->whereMonth('date', '=', date('m', strtotime($selectedMonth)))
-            ->get();
 
-        return view('finance.accounting.detail', compact('month', 'funds'))->with('i', (request()->input('page', 1) - 1) * 5);
-    }
+    public function viewReportDetail($month)
+        {
+            $weeklyAllowances = WeeklyAllowance::all();
+            $totalSum = $weeklyAllowances->sum('allowance');
+            $selectedMonth = $month;
+
+            $givers = Giver::whereYear('date', '=', date('Y', strtotime($selectedMonth)))
+                ->whereMonth('date', '=', date('m', strtotime($selectedMonth)))
+                ->get();
+
+            $totalSumDisbursement = Disbursement::whereYear('date', '=', date('Y', strtotime($selectedMonth)))
+                ->whereMonth('date', '=', date('m', strtotime($selectedMonth)))
+                ->sum('unit_price');
+            
+            $totalid = DisbursementRequest::whereYear('request_date', '=', date('Y', strtotime($selectedMonth)))
+                ->whereMonth('request_date', '=', date('m', strtotime($selectedMonth)))
+                ->count();
+            
+            $totalIdDisbursementRequest = DisbursementRequest::count();
+
+            $monthlyDisbursement = ( $totalSum + $totalSumDisbursement ) * $totalid; 
+
+            $MonthlyGiving = $givers -> sum('total');       
+            // Calculate the sum of each column
+            $sumTithes = $givers->sum('tithe');
+            $sumOffering = $givers->sum('offering');
+            $sumMission = $givers->sum('mission');
+            $sumSanctuary = $givers->sum('sanctuary');
+            $sumLoveGift = $givers->sum('love_gift');
+            $sumDanceMinistry = $givers->sum('dance_ministry');
+
+            $totalFund =ChurchInfo::sum('overall_funds');
+            $funds = $totalFund - ( $totalIdDisbursementRequest * $totalSum);
+
+            return view('finance.accounting.detail', [
+                'totalid'=> $totalid,
+                'MonthlyGiving'=>$MonthlyGiving,
+                'month'=> $selectedMonth,
+                'funds' => $funds,
+                'sumTithes' => $sumTithes,
+                'sumOffering' => $sumOffering,
+                'sumMission' => $sumMission,
+                'sumSanctuary' => $sumSanctuary,
+                'sumLoveGift' => $sumLoveGift,
+                'sumDanceMinistry' => $sumDanceMinistry,
+            ], compact(
+                'totalid',
+                'MonthlyGiving',
+                'monthlyDisbursement',
+                'month',
+                'weeklyAllowances',
+                'sumTithes',
+                'sumOffering',
+                'sumMission',
+                'sumSanctuary',
+                'funds',
+                'sumLoveGift',
+                'sumDanceMinistry'
+            ))->with('i', (request()->input('page', 1) - 1) * 5);
+        }
+
 
 }

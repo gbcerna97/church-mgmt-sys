@@ -9,7 +9,21 @@
                 <div class="pull-left">
                     <a class="btn btn-success" href="{{ route('request.create') }}" data-bs-toggle="tooltip" data-bs-placement="top" title="Add New Disbursement Request">Add New</a>
                 </div>
+                <div class="pull-right">
+                    <form action="" method="GET" class="form-inline">
+                        <div class="form-group row">
+                            <div class="col-8">
+                                <input type="text" class="form-control" name="search" placeholder="Search">
+                                
+                            </div>
+                            <div class="col-4">
+                                <button type="submit" class="btn btn-primary">Search</button>
+                            </div>
+                        </div>
+                    </form>
+                </div>
             </div>
+            
             <div class="card-body pt-4 p-3">
                 <div>
                     @if ($message = Session::get('success'))
@@ -55,6 +69,7 @@
                                 </form>
                             </td>
                         </tr>
+                        <tr></tr>
                         @endforeach
                     </table>
                     {{ $disbursement_requests->links() }}

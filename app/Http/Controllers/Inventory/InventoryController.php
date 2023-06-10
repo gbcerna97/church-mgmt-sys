@@ -5,7 +5,9 @@ namespace App\Http\Controllers\Inventory;
 use App\Http\Controllers\Controller;
 use App\Models\Inventory;
 use App\Models\Donation;
+use App\Models\InventoryImage;
 use Illuminate\Http\Request;
+use App\Helpers\LogActivity;
 
 class InventoryController extends Controller
 {
@@ -56,6 +58,8 @@ class InventoryController extends Controller
         $inventory->total_cost = $total_cost;
         $inventory->save();
 
+        LogActivity::addToLog('Added new inventory record for "' . $request->inventName . '". Purchased on ' . $request->date_purchased . '.');
+
         return redirect()
             ->route('inventory.index')
             ->with('success', 'Product Added Successfully.');
@@ -102,6 +106,7 @@ class InventoryController extends Controller
         $inventory->total_cost = $total_cost;
         $inventory->update();
 
+        LogActivity::addToLog('Updated inventory record for "' . $request->inventName . '". Purchased on ' . $request->date_purchased . '.');
         return redirect()
             ->route('inventory.index')
             ->with('success', 'Product Updated Successfully.');
@@ -112,6 +117,8 @@ class InventoryController extends Controller
      */
     public function destroy(Inventory $inventory)
     {
+        LogActivity::addToLog('Deleted inventory record for "' . $inventory->inventName . '". Purchased on ' . $inventory->date_purchased . '.');
+
         $inventory->delete();
 
         return redirect()

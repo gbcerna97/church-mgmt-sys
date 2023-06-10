@@ -7,6 +7,7 @@ use Illuminate\Http\Request;
 use App\Models\Attendance;
 use App\Models\Event;
 use App\Models\Member;
+use App\Helpers\LogActivity;
 
 
 class AttendanceController extends Controller
@@ -20,40 +21,40 @@ class AttendanceController extends Controller
     }
 
     public function store(Request $request)
-{
-    $event_id = $request->input('event_id');
-    $members = $request->input('member_id', []);
-    $presentStatus = $request->input('present', []);
+    {
+        $event_id = $request->input('event_id');
+        $members = $request->input('member_id', []);
+        $presentStatus = $request->input('present', []);
 
-    // Retrieve the event object
-    $event = Event::find($event_id);
+        // Retrieve the event object
+        $event = Event::find($event_id);
 
-    // Check if the event exists
-    if ($event) {
-        // Update the 'done' property of the event
-        $event->done = 1;
-        $event->save();
+        // Check if the event exists
+        if ($event) {
+            // Update the 'done' property of the event
+            $event->done = 1;
+            $event->save();
 
-        // Save attendance for each member
-        foreach ($members as $index => $memberId) {
-            $present = isset($presentStatus[$index]);
+            // Save attendance for each member
+            foreach ($members as $index => $memberId) {
+                $present = isset($presentStatus[$index]);
 
-            $attendanceData = [
-                'event_id' => $event_id,
-                'member_id' => $memberId,
-                'present' => $present,
-            ];
+                $attendanceData = [
+                    'event_id' => $event_id,
+                    'member_id' => $memberId,
+                    'present' => $present,
+                ];
 
-            Attendance::create($attendanceData);
+                Attendance::create($attendanceData);
+
+                LogActivity::addToLog('Added attendance record for ' . $memberId . ' for ' . $event_id);
+            }
+
+            return redirect()->back()->with('success', 'Attendance saved successfully.');
         }
 
-        return redirect()->back()->with('success', 'Attendance saved successfully.');
+        return redirect()->back()->with('error', 'Event not found.');
     }
-
-    return redirect()->back()->with('error', 'Event not found.');
-}
-
-
 
     public function viewAttendance()
     {

@@ -8,6 +8,9 @@ use App\Models\DisbursementRequest;
 use App\Models\Disbursement;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Schema;
+use App\Models\WeeklyAllowance;
+use App\Models\Voucher;
+use App\Helpers\LogActivity;
 
 class DisbursementRequestController extends Controller
 {
@@ -42,30 +45,56 @@ class DisbursementRequestController extends Controller
 
         DisbursementRequest::create($request->all());
 
+        LogActivity::addToLog('Added new disbursement request record for ' . $request->request_date . '. Requested by ' . $request->prepared_by . '.');
+
         return redirect()->route('request.index')->with('success', 'Record Added Successfully.');
     }
 
     /**
      * Display the specified resource.
      */
-    public function show(string $id)
+
+     public function show(string $id)
     {
-        $disbursement_request = DisbursementRequest::findorFail($id);
-        $disbursements = Disbursement::where('request_id', $disbursement_request->id)->first()
-            ->groupBy(DB::raw(implode(',', Schema::getColumnListing('disbursements'))))
-            ->paginate(10);
+        $disbursementRequest = DisbursementRequest::findOrFail($id);
+        $vouchers = Voucher::all();
+
     
-        return view('finance.request.show',compact('disbursement_request', 'disbursements'))->with('i', (request()->input('page', 1) - 1) * 5);
+        
+        foreach ($vouchers as $voucher) {
+            // Access the related WeeklyAllowance data
+            $weeklyAllowance = $voucher->weeklyAllowance;
+            if ($weeklyAllowance) {
+                // Access the properties of the WeeklyAllowance model
+                $allowanceName = $weeklyAllowance->name;
+                // Do something with the WeeklyAllowance data
+            }
+
+            // Access the related Disbursement data
+            $disbursement = $voucher->disbursement;
+            if ($disbursement) {
+                // Access the properties of the Disbursement model
+                $disbursementAmount = $disbursement->amount;
+                // Do something with the Disbursement data
+            }
+        }
+        $weeklyAllowanceTotal = WeeklyAllowance::sum('allowance');
+        $disbursementTotal = Disbursement::where('request_id', $disbursementRequest->id)->sum('unit_price');
+        $Total =  $weeklyAllowanceTotal + $disbursementTotal;
+
+        $weeklyAllowances = WeeklyAllowance::all();
+        $disbursements = Disbursement::where('request_id', $disbursementRequest->id)->get();
+
+        return view('finance.request.show', compact('disbursementRequest', 'vouchers', 'weeklyAllowances', 'disbursements', 'Total'));
+            
     }
 
     /**
      * Show the form for editing the specified resource.
      */
-    public function edit(string $id)
+    public function edit(DisbursementRequest $request)
     {
-        $disbursement_request = DisbursementRequest::findorFail($id);
-        
-        return view('finance.request.edit', compact('disbursement_request'));
+        return view('finance.request.edit', compact('request'));
     }
 
     /**
@@ -79,6 +108,8 @@ class DisbursementRequestController extends Controller
 
         $disbursement_request->update($request->all());
 
+        LogActivity::addToLog('Modified disbursement request record for ' . $request->request_date . '. Requested by ' . $request->prepared_by . '.');
+
         return redirect()->route('request.index')->with('success', 'Record Updated Successfully.');
     }
 
@@ -89,6 +120,8 @@ class DisbursementRequestController extends Controller
     {
         $disbursement_request = DisbursementRequest::findorFail($id);
         $disbursement_request->delete();
+
+        LogActivity::addToLog('Deleted request record for ' . $disbursement_request->request_date . '. Requested by: ' . $disbursement_request->prepared_by . '.');
 
         return redirect()->route('request.index')->with('success', 'Record Deleted Successfully.');
     }

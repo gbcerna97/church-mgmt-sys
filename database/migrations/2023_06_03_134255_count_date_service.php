@@ -11,8 +11,12 @@ return new class extends Migration
      */
     public function up(): void
     {
-        Schema::table('disbursements', function (Blueprint $table) {
-            $table->string('voucher_number')->nullable();
+        Schema::create('counting_services', function (Blueprint $table) {
+            $table->id();
+            $table->string('type_service');
+            $table->date('date');
+            $table->time('time');
+            $table->timestamps();
         });
     }
 
@@ -21,8 +25,6 @@ return new class extends Migration
      */
     public function down(): void
     {
-        Schema::table('disbursements', function (Blueprint $table) {
-            //
-        });
+        Schema::dropIfExists('counting_services');
     }
 };
